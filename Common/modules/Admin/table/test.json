@@ -1,0 +1,19 @@
+{
+    "table": "test",
+    
+    "fields": [
+        {
+            "name": "id",
+            "caption": "ID"
+        },
+        {
+            "name": "name",
+            "caption": "UserID=%%%Controller::getInstance()->getCurrentUserID()%%%"
+        },
+        {
+            "name": "Path",
+            "caption": "%%%__DIR__%%%",
+            "value": "<?php echo __DIR__; ?>"
+        }
+    ]
+}

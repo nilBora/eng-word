@@ -1,0 +1,30 @@
+<div class="container">
+	<p><a class="btn btn-primary btn-lg" id="vol_plus" role="button" data-url="<?php echo $urlVolPlus; ?>" >VOL ++</a></p>
+	<p><a class="btn btn-primary btn-lg" id="vol_minus" role="button" data-url="<?php echo $urlVolMinus; ?>">VOL --</a></p>
+	<p><a class="btn btn-primary btn-lg" id="gibernation" role="button" data-url="<?php echo $urlVolHibernation; ?>">Gibernation</a></p>
+	<p><a class="btn btn-primary btn-lg" id="shutdown" role="button" data-url="<?php echo $urlVolShutdown; ?>">Shutdown</a></p>
+<div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Add Link for downloads</h4>
+      </div>
+      <div class="modal-body">
+         <form class="form-signin js-form-add-link"  method="POST" action="/add/new/link/">
+	        <label for="inputEmail" class="sr-only">Link</label>
+	        <input name="url" type="text" id="inputEmail" class="form-control" placeholder="Link" required="" autofocus="">
+	        <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary js-add-new-link">Save</button>
+		    </div>
+	      </form>
+      </div>
+    </div>
+  </div>
+</div>
