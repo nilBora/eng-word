@@ -41,4 +41,10 @@ class EngWordObject extends Object
         
         return $this->search($sql, $search, Object::FETCH_ALL, $groupBy);
     }
+
+    public function change($search, $values)
+    {
+        return $this->update($this->_tableName, $search, $values);
+    }
+
 }

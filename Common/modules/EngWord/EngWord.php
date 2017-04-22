@@ -26,15 +26,15 @@ class EngWord extends Display
 		if (empty($_POST['word'])) {
 			throw new Exception("No Word!");
 		}
-		$word = trim($_POST['word']);
+		$word = trim(mb_strtolower($_POST['word']));
  		$this->fragment = true;
 		$response->setType(Response::TYPE_JSON);
-		
-		
+
 		$wordData = $this->object->get($word);
 		
 		if ($wordData) {
 			$translate = $wordData['translate'];
+			$this->_updateTranslate($wordData);
 		}
 		if (!$wordData) {
 			$translateData = $this->_getYandexTranslate($word);
@@ -47,10 +47,22 @@ class EngWord extends Display
 			);
 			$this->object->add($values);
 		}
-		
-		
+
 		$response->content = array('translate' => $translate);
 		return true;
+	}
+
+	private function _updateTranslate($wordData)
+	{
+		$values = array(
+			'frequency' => $wordData['frequency'] + 1,
+			'mdate' => date("Y-m-d H:i:s")
+		);
+		$search = array(
+			'id' => $wordData['id']
+		);
+
+		return $this->object->change($search, $values);
 	}
 	
 	private function _getYandexTranslate($string)
