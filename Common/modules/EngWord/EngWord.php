@@ -23,10 +23,10 @@ class EngWord extends Display
 	*/
 	public function getTranslate(Response &$response)
 	{
-		if (empty($_POST['word'])) {
+		if (empty($_REQUEST['word'])) {
 			throw new Exception("No Word!");
 		}
-		$word = trim(mb_strtolower($_POST['word']));
+		$word = trim(mb_strtolower($_REQUEST['word']));
  		$this->fragment = true;
 		$response->setType(Response::TYPE_JSON);
 
@@ -38,6 +38,7 @@ class EngWord extends Display
 		}
 		if (!$wordData) {
 			$translateData = $this->_getYandexTranslate($word);
+			
 			$translate = $translateData['text'][0];
 			$values = array(
 				'word' 		=> $word,
@@ -67,11 +68,14 @@ class EngWord extends Display
 	
 	private function _getYandexTranslate($string)
 	{
+		$string = urlencode($string);
+		
 		$apiKey = 'trnsl.1.1.20161205T200810Z.af383dcd1b823b6f.1be898480d11b4a2d43cdc2884695fd754286ac8';
 		$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key='.$apiKey."&text=".$string."&lang=en-ru";
 		$response = file_get_contents($url);
-
+		
 		$response = json_decode($response, true);
+		
 		return $response;
 	}
 	
