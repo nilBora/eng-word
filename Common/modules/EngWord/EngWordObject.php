@@ -7,7 +7,7 @@ class EngWordObject extends Object
     public function add($values)
     {
         if (empty($values['cdate'])) {
-            $values['cdate'] = date("Y-m-d");
+            $values['cdate'] = date("Y-m-d H:i:s");
         }
         return $this->insert($this->_tableName, $values);
     }
