@@ -6,6 +6,7 @@ class User extends Display
 	{
 		if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
+			//TODO: Use Request Class By Securyty
 			$login = $_POST['email'];
 			$password = $_POST['password'];
 
@@ -14,7 +15,11 @@ class User extends Display
 			if ($user) {
 				$this->controller->setSession('auth', md5($user['id']));
 				$this->controller->setSession('user_id', $user['id']);
-				$this->controller->redirect('/');
+				$redirectUri = '/';
+				if (!empty($_REQUEST['redirect_uri'])) {
+					$redirectUri = $_REQUEST['redirect_uri'];
+				}
+				$this->controller->redirect($redirectUri);
 			}
 		}
         $this->fragment = true;

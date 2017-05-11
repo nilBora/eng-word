@@ -22,17 +22,23 @@ class Crud extends Object {
     
     public function invokePhp($matches)
     {
-        return eval('return '.$matches[1].';');
+        //echo addslashes(eval('return '.$matches[1].';'));
+        return addslashes(eval('return '.$matches[1].';'));
     }
     
     public function render()
     {
         $parseJson = $this->_parse();
-        $parseData = json_decode($parseJson, true);
+        $parseData = json_decode(($parseJson), true);
+
+        if (!array_key_exists('table', $parseData)) {
+            throw new Exception('Not found table field');
+        }
+        $sql = "SELECT * FROM ".$parseData['table'];
+        $result = $this->search($sql);
+
         
-        var_dump($parseData);
-        
-        return $this->_parse();
+        return $result;
     }
     
     public function create($name)

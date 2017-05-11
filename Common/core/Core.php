@@ -112,7 +112,7 @@ class Core extends Dispatcher
         $response, $controller, $method
     )
     {
-        $annotations = $this->getClassAnnotations($controller, $method);
+        $annotations = false;//$this->getClassAnnotations($controller, $method);
         
         if (!$annotations) {
             return false;
