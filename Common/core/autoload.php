@@ -25,3 +25,5 @@ require_once CORE_DIR . 'libs/SystemLog.php';
 require_once CORE_DIR . 'libs/System.php';
 
 require_once CORE_DIR.'Crud/Crud.php';
+
+require_once HELPERS_DIR.'Profiler.php';
