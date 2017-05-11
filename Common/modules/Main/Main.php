@@ -29,7 +29,7 @@ class Main extends Display
     
     public function test2(Response &$response)
     {
-        $response->content = 11;
+        $response->setContent(11);
         $response->asas = 'test';
         $this->fff = 'ad';
         //echo 'test2';

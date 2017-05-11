@@ -19,3 +19,4 @@ class DisplayException extends Exception
 class PermissionException extends Exception
 {
 }
+

@@ -12,7 +12,7 @@ $routes = [
     '/api/(.+)/'      => ['use' => 'RESTfulApi@onApiRequest'],
     '/redirect/'      => ['use' => 'EngWord@onRedirect'],
 	'/get/translate/' => ['use' => 'EngWord@getTranslate'],
-	'/get/bot/word/'  => ['use' => 'EngWord@getWordByBot']
+	'/get/bot/word/'  => ['use' => 'EngWord@getWordByBot'],
 ];
 
 $rules = [

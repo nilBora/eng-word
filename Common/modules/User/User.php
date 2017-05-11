@@ -19,7 +19,7 @@ class User extends Display
 		}
         $this->fragment = true;
         //$response->setLayout(false);
-		$response->content = $this->fetch('login.phtml');
+		$response->setContent($this->fetch('login.phtml'));
 	}
 
 	public function logout()

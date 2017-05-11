@@ -12,7 +12,9 @@ class EngWord extends Display
       
         $this->controller->includeStatic('test.js');
         
-        $response->content = $this->fetch('index.phtml', $vars);
+        $content = $this->fetch('index.phtml', $vars);
+        
+        $response->setContent($content);
         
         return true;
     }
@@ -48,7 +50,7 @@ class EngWord extends Display
 			$this->object->add($values);
 		}
 
-		$response->content = array('translate' => $translate);
+		$response->setContent(array('translate' => $translate));
 		return true;
 	}
 
@@ -80,7 +82,7 @@ class EngWord extends Display
 		$this->fragment = true;
 		$response->setType(Response::TYPE_JSON);
 		$data = array('message' => 'Server Time: '.date('d-m-Y H:i:s'));
-		$response->content = $data;
+		$response->setContent($data);
 		
 		return true;
 	}
@@ -96,8 +98,8 @@ class EngWord extends Display
     public function onRedirect(Response $response)
     {
         $response->setAction(Response::ACTION_REDIRECT);
-        $response->url = '/';
-        
+        $response->setUrl('/');
+
         return true;
     }
 }

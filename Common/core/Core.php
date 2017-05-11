@@ -3,9 +3,10 @@
 class Core extends Dispatcher
 {
 	private static $_instance = null;
-	protected $_sessionData = null;
     private $_route;
-    
+	
+	protected $_sessionData = null;
+   
 	public function __construct()
 	{
 		if (isset(self::$_instance)) {
@@ -111,7 +112,7 @@ class Core extends Dispatcher
         $response, $controller, $method
     )
     {
-        $annotations = false;//$this->getClassAnnotations($controller, $method);
+        $annotations = $this->getClassAnnotations($controller, $method);
         
         if (!$annotations) {
             return false;

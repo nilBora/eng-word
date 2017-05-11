@@ -21,6 +21,14 @@ class Container
             if (array_key_exists('params', $values)) {
                 $params = $values['params'];
             }
+            
+            if (array_key_exists('response', $values)) {
+                $resposeData = [];    
+                $response = new Response();
+                $resposeData[] = &$response;
+                $params = array_merge($resposeData, $params);
+            }
+            print_r($params);
             call_user_func_array(
                 [$controller, $method],
                 $params
@@ -37,8 +45,10 @@ class Container
                     'method' => 'onDisaplyTest',
                     'params' => array('test')
                 ],
-                'Finance' => [
-                    'method' => 'testAdmin'
+                'EngWord' => [
+                    'method' => 'test',
+                    'response' => true,
+                    'params' => ['222']
                 ]
             ]
         ];

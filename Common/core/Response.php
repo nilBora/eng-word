@@ -8,13 +8,13 @@ class Response extends Dispatcher
     
     const ACTION_REDIRECT = 'redirect';
     
-    public $url = false;
+    protected $url = false;
     
-    private $_layout = 'main.phtml';
-    private $_type;
-    private $_action;
+    protected $layout = 'main.phtml';
+    protected $type;
+    protected $action;
     
-    public $content = '';
+    protected $content = '';
     
     public function __construct($type = self::TYPE_NORMAL, $action = false)
     {
@@ -31,7 +31,7 @@ class Response extends Dispatcher
         }
         
         if ($this->_isTypeNormal()) {
-            $module->display($this->content, $this->_layout);
+            $module->display($this->content, $this->layout);
             
             return true;
         }
@@ -41,7 +41,7 @@ class Response extends Dispatcher
             exit;
         }
         
-        if ($this->_type == static::TYPE_API) {
+        if ($this->type == static::TYPE_API) {
             
              echo json_encode(['content' => $this->content, 'vars' => $this]);
              exit;
@@ -51,31 +51,41 @@ class Response extends Dispatcher
     
     private function _isTypeNormal()
     {
-        return $this->_type == static::TYPE_NORMAL;
+        return $this->type == static::TYPE_NORMAL;
     }
     
     private function _isTypeJson()
     {
-        return $this->_type == static::TYPE_JSON;
+        return $this->type == static::TYPE_JSON;
     }
     
     private function _isActionRedirect()
     {
-        return $this->url && $this->_action == static::ACTION_REDIRECT;
+        return $this->url && $this->action == static::ACTION_REDIRECT;
     }
     
     public function setLayout($layout)
     {
-        $this->_layout = $layout;
+        $this->layout = $layout;
     }
     
     public function setType($type)
     {
-        $this->_type = $type;
+        $this->type = $type;
     }
     
     public function setAction($action)
     {
-        $this->_action = $action;
+        $this->action = $action;
+    }
+    
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+    
+    public function setContent($content)
+    {
+        $this->content = $content;
     }
 }
