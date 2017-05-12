@@ -52,7 +52,7 @@ class SystemLog
         $systemMemory = static::convertMemory($systemMemory);
         $queryLog = static::$queryLog;
 
-        $profiler = new Profiler(ROOT_DIR);
+        $profiler = new Profiler();
         $profileMessages = $profiler->getMessages();
 
         ob_start();
