@@ -51,6 +51,10 @@ class SystemLog
         $systemTime = microtime(true) - static::$systemTime;
         $systemMemory = static::convertMemory($systemMemory);
         $queryLog = static::$queryLog;
+
+        $profiler = new Profiler(ROOT_DIR);
+        $profileMessages = $profiler->getMessages();
+
         ob_start();
 
         include realpath(__DIR__."/../public/templates/sys_info.phtml");

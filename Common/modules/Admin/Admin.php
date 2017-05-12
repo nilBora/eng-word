@@ -7,12 +7,15 @@ class Admin extends Display
        
         $crud = $this->controller->createCrudInstance('test');
         
-        $json = $crud->render();
-        echo "<pre>";
-        print_R($json);
+        $data = $crud->render();
+
         //$json = json_decode($json, true);
-        
-        //$response->setContent('1');
+        $vars = [
+            'table' => $data
+        ];
+        $response->setContent($this->fetch('table.phtml', $vars));
+
+        return true;
     }
     
     

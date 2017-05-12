@@ -22,24 +22,24 @@ class Crud extends Object {
     
     public function invokePhp($matches)
     {
-        return eval('return '.$matches[1].';');
+        //echo addslashes(eval('return '.$matches[1].';'));
+        return addslashes(eval('return '.$matches[1].';'));
     }
     
     public function render()
     {
         $parseJson = $this->_parse();
-        $parseData = json_decode($parseJson, true);
         
-        //var_dump($parseData);
-        if (!array_key_exists('table', $parseData)) {
-            throw new Exception('Field Table ot Foud');
-        }
-        
-        $sql = "SELECT * FROM ".$parseData['table'];
+        $parseData = json_decode(($parseJson), true);
 
-        $select = $this->select($sql, false);
-        var_dump($select);
-        return $this->_parse();
+        if (!array_key_exists('table', $parseData)) {
+            throw new Exception('Not found table field');
+        }
+        $sql = "SELECT * FROM ".$parseData['table'];
+        $result = $this->search($sql);
+
+        
+        return $result;
     }
     
     public function create($name)

@@ -31,7 +31,7 @@ abstract class Object implements IObject
         return static::$adapter->select($sql, $search);
     }
 
-    public function search($sql, $search, $type = self::FETCH_ALL, $orderBy=false)
+    public function search($sql, $search = false, $type = self::FETCH_ALL, $orderBy=false)
     {
         return static::$adapter->search($sql, $search, $type, $orderBy);	
     }
