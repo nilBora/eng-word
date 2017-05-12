@@ -3,6 +3,7 @@
 class Profiler
 {
     private $_config;
+    
     public function __construct($config = false)
     {
         if (!$config) {
@@ -17,13 +18,25 @@ class Profiler
     private function _getDefaultCofig()
     {
         $config = [
-            'scanDir' => [
+            'scanDir'   => [
                 MODULES_DIR,
             ],
-            'find' => ['$_POST', '$_GET', '$_REQUUEST']
+            'find'      => ['$_POST', '$_GET', '$_REQUUEST'],
+            'blacklist' => [
+                HELPERS_DIR.'Request.php',
+                HELPERS_DIR.'Profiler.php',
+            ]
         ];
         
         return $config;
+    }
+    
+    private function _getBlackListFiles()
+    {
+        $blackList = [
+            HELPERS_DIR.'Request.php',
+            HELPERS_DIR.'Profiler.php',
+        ];
     }
     
     private function _start()
@@ -50,6 +63,7 @@ class Profiler
     private function _scanDir($scanDir, $messages)
     {
         $finds = $this->_config['find'];
+        $blackList = $this->_config['blacklist'];
         //$messages = [];
         $patern = '##Umis';
         if ($handle = opendir($scanDir)) {
@@ -59,7 +73,9 @@ class Profiler
                 }
                 
                 $pathFile = realpath($scanDir.'/'.$file);
-                
+                if (in_array($pathFile, $blackList)) {
+                    continue;
+                }
                 if (is_file($pathFile)) {
                     foreach ($finds as $find) {
                         if ($lines = $this->_searchLine($pathFile, $find)) {
