@@ -19,7 +19,8 @@ class Profiler
         $config = [
             'scanDir' => [
                 MODULES_DIR,
-            ]
+            ],
+            'find' => ['$_POST', '$_GET', '$_REQUUEST']
         ];
         
         return $config;
@@ -48,7 +49,7 @@ class Profiler
     
     private function _scanDir($scanDir, $messages)
     {
-        
+        $finds = $this->_config['find'];
         //$messages = [];
         $patern = '##Umis';
         if ($handle = opendir($scanDir)) {
@@ -60,10 +61,12 @@ class Profiler
                 $pathFile = realpath($scanDir.'/'.$file);
                 
                 if (is_file($pathFile)) {
-                    if (strstr(file_get_contents($pathFile), '$_POST')) {
-                        $messages[] = 'User Reuqest Class in '.$file;
+                    foreach ($finds as $find) {
+                        if ($lines = $this->_searchLine($pathFile, $find)) {
+                            $messages[] = $this->_fetchMessage($find, $pathFile, $lines);
+                        }
                     }
-                  
+                    
                 } else if(is_dir($pathFile)) {
                    $messages = $this->_scanDir($pathFile, $messages); 
                 }
@@ -72,6 +75,32 @@ class Profiler
         }
       
         return $messages;
+    }
+    
+    private function _searchLine($filename, $s) 
+    { 
+        $line = []; 
+    
+        $fh = fopen($filename, 'rb'); 
+    
+        for($i = 1; ($t = fgets($fh)) !== false; $i++) { 
+            if(strpos($t, $s) !== false) { 
+                $line[] = $i;
+            } 
+        } 
+    
+        fclose($fh); 
+    
+        return $line; 
+    }
+    
+    private function _fetchMessage($find, $pathFile, $lines)
+    {
+         $msg = 'Use Reuqest Class. Find: '.$find.".<br>Line: ".
+                                implode(', ', $lines).
+                                '. <br>File: '.basename($pathFile).
+                                '. <br>Path: '.$pathFile;
+        return $msg;
     }
 
 }
