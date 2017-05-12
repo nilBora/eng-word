@@ -51,9 +51,14 @@ class SystemLog
         $systemTime = microtime(true) - static::$systemTime;
         $systemMemory = static::convertMemory($systemMemory);
         $queryLog = static::$queryLog;
-
-        $profiler = new Profiler();
-        $profileMessages = $profiler->getMessages();
+        
+        $controller = Controller::getInstance();
+        $config = $controller->getConfig();
+        if (!empty($config['dev']['profiler']) && $config['dev']['profiler']) {
+            $profiler = new Profiler();
+            $profileMessages = $profiler->getMessages();
+        }
+       
 
         ob_start();
 

@@ -50,6 +50,7 @@ function more()
                 </tr>
             <?php } ?>        
         </table>
+        <?php if (!empty($profileMessages)) { ?>
         <h5>Profiler</h5>
         <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr id="thead">
@@ -63,5 +64,6 @@ function more()
                 </tr>
             <?php } ?>
         </table>
+        <?php } ?>
     </div>
 </div>

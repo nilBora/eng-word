@@ -6,6 +6,7 @@ class Controller extends Dispatcher
     private $_properties = [];
     private static $_modules = [];
     private static $_instance = null;
+    protected $config;
     
     public function __construct()
     {
@@ -15,6 +16,7 @@ class Controller extends Dispatcher
         }
         parent::__construct();
         $this->_core = Core::getInstance();
+        $this->_setConfig();
     }
     
     public static function getInstance()
@@ -24,6 +26,16 @@ class Controller extends Dispatcher
         }
 
         return self::$_instance;
+    }
+    
+    private function _setConfig()
+    {
+        $this->config = $GLOBALS;
+    }
+    
+    public function getConfig()
+    {
+        return $this->config;
     }
 
     public function getCurrentUserID()
