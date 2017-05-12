@@ -12,7 +12,7 @@ class Admin extends Display
         print_R($json);
         //$json = json_decode($json, true);
         
-        $response->setContent('1');
+        //$response->setContent('1');
     }
     
     

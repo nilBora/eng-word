@@ -30,8 +30,15 @@ class Crud extends Object {
         $parseJson = $this->_parse();
         $parseData = json_decode($parseJson, true);
         
-        var_dump($parseData);
+        //var_dump($parseData);
+        if (!array_key_exists('table', $parseData)) {
+            throw new Exception('Field Table ot Foud');
+        }
         
+        $sql = "SELECT * FROM ".$parseData['table'];
+
+        $select = $this->select($sql, false);
+        var_dump($select);
         return $this->_parse();
     }
     
