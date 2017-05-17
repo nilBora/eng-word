@@ -33,11 +33,20 @@ class Controller extends Dispatcher
         $this->config = $GLOBALS;
     }
     
-    public function getConfig()
+    public function getConfig($key)
+    {
+        if (!array_key_exists($key, $this->config)) {
+            throw new Exception('Not found config with key: '.$key);
+        }
+        
+        return $this->config[$key];
+    }
+    
+    public function getConfigs()
     {
         return $this->config;
     }
-
+    
     public function getCurrentUserID()
     {
         return $this->_core->getUserID();

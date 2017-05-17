@@ -53,7 +53,7 @@ class SystemLog
         $queryLog = static::$queryLog;
         
         $controller = Controller::getInstance();
-        $config = $controller->getConfig();
+        $config = $controller->getConfigs();
         if (!empty($config['dev']['profiler']) && $config['dev']['profiler']) {
             $profiler = new Profiler();
             $profileMessages = $profiler->getMessages();
