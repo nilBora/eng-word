@@ -13,6 +13,7 @@ class Admin extends Display
         $vars = [
             'table' => $data
         ];
+       
         $response->setContent($this->fetch('table.phtml', $vars));
 
         return true;

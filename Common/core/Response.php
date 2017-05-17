@@ -1,6 +1,6 @@
 <?php
 
-class Response extends Dispatcher
+class Response extends ArrayObject
 {
     const TYPE_NORMAL = 'normal';
     const TYPE_JSON = 'json';
@@ -18,6 +18,7 @@ class Response extends Dispatcher
     
     public function __construct($type = self::TYPE_NORMAL, $action = false)
     {
+        parent::__construct([], ArrayObject::ARRAY_AS_PROPS);
         $this->setType($type);
         $this->setAction($action);
     }
