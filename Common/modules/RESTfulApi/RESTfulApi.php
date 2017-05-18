@@ -1,5 +1,7 @@
 <?php
 
+use \Nil\Common\Core\RestAPI;
+
 class RESTfulApi extends RestAPI
 {
     /**

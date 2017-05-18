@@ -45,7 +45,7 @@ class ObjectPDO extends AbstractObject
         
         $this->addLog($queryString);
         
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
     
     public function insert($table, $values)

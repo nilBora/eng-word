@@ -1,7 +1,5 @@
 <?php
 
-//namespace Nil\modules\EngWord;
-
 use \Nil\Common\Core\Display;
 use \Nil\Common\Core\Response;
 

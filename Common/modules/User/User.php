@@ -1,6 +1,7 @@
 <?php
 
 use \Nil\Common\Core\Display;
+use \Nil\Common\Core\Response;
 
 class User extends Display
 {

@@ -46,7 +46,7 @@ class Core extends Dispatcher
 
 		$currentRouteConfig =  $this->_route->pareseUrl();
         $rules = $this->_route->getRules();
-        
+
 		if ($this->_hasExistMethodControllerByConfig($currentRouteConfig)) {
 
 			if ($this->_isAuthRoute($currentRouteConfig)) {
@@ -89,7 +89,7 @@ class Core extends Dispatcher
 			
 			return true;
 		}
-		//throw new NotFoundException('Not Found');
+		throw new NotFoundException('Not Found');
 	}
     
     public function make()
