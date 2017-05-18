@@ -21,7 +21,7 @@ class Profiler
             'scanDir'   => [
                 MODULES_DIR,
             ],
-            'find'      => ['$_POST', '$_GET', '$_REQUUEST'],
+            'find'      => ['$_POST', '$_GET', '$_REQUEST', '$_SESSION'],
             'blacklist' => [
                 HELPERS_DIR.'Request.php',
                 HELPERS_DIR.'Profiler.php',
@@ -112,10 +112,9 @@ class Profiler
     
     private function _fetchMessage($find, $pathFile, $lines)
     {
-         $msg = 'Use Reuqest Class. Find: '.$find.".<br>Line: ".
-                                implode(', ', $lines).
-                                '. <br>File: '.basename($pathFile).
-                                '. <br>Path: '.$pathFile;
+        $msg = 'Use Reuqest Class. Find: '.$find.".<br>Line: ".
+                 implode(', ', $lines).'. <br>File: '.basename($pathFile).
+                 '. <br>Path: '.$pathFile;
         return $msg;
     }
 
