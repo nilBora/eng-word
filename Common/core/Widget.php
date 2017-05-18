@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+namespace Nil\Common\Core;
+
 class Widget
 {    
     public function __call($name, $params)

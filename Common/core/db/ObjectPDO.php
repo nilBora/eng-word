@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class ObjectPDO extends AbstractObject
 {
     public function __construct($db)
@@ -11,10 +13,10 @@ class ObjectPDO extends AbstractObject
     
     private function _setAttributes($db)
     {
-        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $db->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
-        $db->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+        $db->setAttribute(\PDO::ATTR_ORACLE_NULLS, \PDO::NULL_EMPTY_STRING);
+        $db->setAttribute(\PDO::ATTR_CASE, \PDO::CASE_NATURAL);
+        $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         $db->query('SET NAMES utf8');
         
         return true;
@@ -28,7 +30,7 @@ class ObjectPDO extends AbstractObject
         
         $this->addLog($queryString);
         
-        return $query->fetch(PDO::FETCH_ASSOC);
+        return $query->fetch(\PDO::FETCH_ASSOC);
     }
     
     public function search($sql, $search, $type = self::FETCH_ALL, $orderBy=false)

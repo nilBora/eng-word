@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class Dispatcher
 {
     public function __construct()

@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class ValuesObject extends Dispatcher
 {
     private $_values;

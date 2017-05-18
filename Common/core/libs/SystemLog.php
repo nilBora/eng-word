@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class SystemLog
 {
     public static $systemTime;

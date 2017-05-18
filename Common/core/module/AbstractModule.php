@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 abstract class AbstractModule extends Dispatcher
 {
     protected $controller;

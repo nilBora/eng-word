@@ -1,5 +1,7 @@
 <?php
 
+use Nil\Common\Core\Object;
+
 class EngWordObject extends Object
 {
     private $_tableName = 'words';

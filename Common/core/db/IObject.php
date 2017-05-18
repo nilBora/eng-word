@@ -1,5 +1,7 @@
 <?php 
 
+namespace Nil\Common\Core;
+
 interface IObject
 {    
     public function select($sql, $search);

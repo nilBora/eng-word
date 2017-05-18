@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class QueueObject extends Object
 {
 	private $_tableName = 'queue';

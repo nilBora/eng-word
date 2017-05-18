@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class Crud extends Object {
     private $_tableFile;
     

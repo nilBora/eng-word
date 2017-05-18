@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+use \Nil\Common\Core\Display;
+
 class Queue extends Display
 {
 	public function addQueue($options, $idUser)

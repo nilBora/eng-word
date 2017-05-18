@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class Core extends Dispatcher
 {
 	private static $_instance = null;
@@ -44,9 +46,11 @@ class Core extends Dispatcher
 
 		$currentRouteConfig =  $this->_route->pareseUrl();
         $rules = $this->_route->getRules();
+        
 		if ($this->_hasExistMethodControllerByConfig($currentRouteConfig)) {
 
 			if ($this->_isAuthRoute($currentRouteConfig)) {
+			    
 			    $response = new Response();
 			    $user = Controller::getModule('User');
                 $user->login($response);
@@ -85,7 +89,7 @@ class Core extends Dispatcher
 			
 			return true;
 		}
-		throw new NotFoundException();
+		//throw new NotFoundException('Not Found');
 	}
     
     public function make()
@@ -200,19 +204,45 @@ class Core extends Dispatcher
 
 	private function _initModules()
 	{
-		spl_autoload_register(function ($class) {
-		   
-            $dirPath = MODULES_DIR.$class.'/';
-            
-            $dirPath = str_replace(['Object'], '', $dirPath);
-           
-            $filePath = $dirPath.$class.'.php';
-           
-            if (!file_exists($filePath)) {
-                throw new Exception("File Class Not Found: ". $filePath);
+        $modules = array(
+            'Admin',
+            'EngWord',
+            'Main',
+            'Queue',
+            'RestFulApi',
+            'User'  
+        );
+        
+        foreach ($modules as $module) {
+            $fileDir = MODULES_DIR.$module.'/'.$module.'.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
             }
-            require_once $filePath;
-        });
+            
+            $fileDir = MODULES_DIR.$module.'/'.$module.'Object.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+            
+            $fileDir = MODULES_DIR.$module.'/'.$module.'Api.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+            
+        }
+		// spl_autoload_register(function ($class) {
+// 		  
+            // $dirPath = MODULES_DIR.$class.'/';
+//            
+            // $dirPath = str_replace(['Object'], '', $dirPath);
+//            
+            // $filePath = $dirPath.$class.'.php';
+//           
+            // if (!file_exists($filePath)) {
+                // throw new \Exception("File Class Not Found: ". $filePath);
+            // }
+            // require_once $filePath;
+        // });
     }
 	
 	public function getUserID()

@@ -1,5 +1,7 @@
 <?php
 
+use \Nil\Common\Core\Display;
+
 class User extends Display
 {
 	public function login(Response &$response)

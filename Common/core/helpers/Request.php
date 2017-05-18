@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class Request
 {
     private $_post;

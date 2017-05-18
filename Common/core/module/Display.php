@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class Display extends AbstractModule implements IModule
 {
     private $_path = null;

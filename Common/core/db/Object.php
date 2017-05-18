@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 require_once __DIR__.'/IObject.php';
 require_once __DIR__.'/AbstractObject.php';
 require_once __DIR__.'/ObjectPDO.php';
@@ -20,7 +22,7 @@ abstract class Object implements IObject
         if ($type == 'PDO') {
             $className = 'Object'.$type;
         }
-        
+        $className = '\Nil\Common\Core\\'.$className;
         static::$adapter = new $className($db);
         
         return static::$adapter;

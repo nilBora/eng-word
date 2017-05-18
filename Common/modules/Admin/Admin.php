@@ -1,5 +1,9 @@
 <?php
 
+namespace Nil\Modules\Admin;
+
+use \Nil\Common\Core\Display;
+
 class Admin extends Display
 {
     public function defaultIndex(Response &$response)

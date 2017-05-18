@@ -1,5 +1,9 @@
 <?php
 
+namespace Nil\modules\Main;
+
+use \Nil\Common\Core\Display;
+
 class Main extends Display
 {
     public function displayDefault()

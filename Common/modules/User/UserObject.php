@@ -1,5 +1,7 @@
 <?php
 
+use Nil\Common\Core\Object;
+
 class UserObject extends Object
 {
     private $_tableName = 'users';

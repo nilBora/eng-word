@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Common\Core;
+
 class Controller extends Dispatcher
 {
     private $_core = null;
