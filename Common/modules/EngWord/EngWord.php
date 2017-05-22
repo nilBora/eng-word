@@ -100,6 +100,12 @@ class EngWord extends Display
         echo $id;
         echo 1;
     }
+
+	public function test2(Response &$response)
+	{
+		$this->fragment = true;
+		echo 1;
+	}
     
     
     public function onRedirect(Response $response)

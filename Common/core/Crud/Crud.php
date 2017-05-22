@@ -2,6 +2,8 @@
 
 namespace Nil\Common\Core;
 
+use Nil\DB\Object;
+
 class Crud extends Object {
     private $_tableFile;
     

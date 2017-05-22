@@ -1,6 +1,6 @@
 <?php
 
-namespace Nil\Common\Core;
+namespace Nil\DB;
 
 class ObjectPDO extends AbstractObject
 {

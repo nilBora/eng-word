@@ -116,26 +116,28 @@ class Core extends Dispatcher
         $response, $controller, $method
     )
     {
-        $annotations = false;//$this->getClassAnnotations($controller, $method);
+        $annotations = $this->getClassAnnotations($controller, $method);
         
         if (!$annotations) {
             return false;
         }
-        
+
+
         foreach ($annotations as $annotation) {
             $params = explode(" ", $annotation);
-            
-            $const = $params[2];
-            
-            if (!defined($const)) {
-                throw new Exception(sprintf('Constant not found %s', $const));
-            }
+
+            $const = trim($params[2]);
+
+//            if (!defined($const)) {
+//                throw new \Exception(sprintf('Constant not found %s', $const));
+//            }
+            $const = constant("Nil\Common\Core\\".$const);
             switch($params[1]) {
-                case 'type': 
-                    $response->setType(constant($const));
+                case 'type':
+                    $response->setType($const);
                     break;
                 case 'action':
-                    $response->setAction(constant($const));
+                    $response->setAction($const);
                     break;
                 default: 
                     break;
@@ -148,7 +150,7 @@ class Core extends Dispatcher
     // TODO: move to Controller
     public function getClassAnnotations($class, $method)
     {
-        $r = new ReflectionMethod($class, $method);       
+        $r = new \ReflectionMethod($class, $method);
        
         $doc = $r->getDocComment();
         

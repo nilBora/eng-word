@@ -1,6 +1,8 @@
 <?php
 
-namespace Nil\Common\Core;
+namespace Nil\DB;
+
+use  Nil\Common\Core\SystemLog;
 
 abstract class AbstractObject implements IObject
 {

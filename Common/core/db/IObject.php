@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace Nil\Common\Core;
+namespace Nil\DB;
 
 interface IObject
 {    
