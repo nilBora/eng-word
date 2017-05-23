@@ -46,7 +46,7 @@ class Core extends Dispatcher
 
 		$currentRouteConfig =  $this->_route->pareseUrl();
         $rules = $this->_route->getRules();
-        
+
 		if ($this->_hasExistMethodControllerByConfig($currentRouteConfig)) {
 
 			if ($this->_isAuthRoute($currentRouteConfig)) {
@@ -63,6 +63,12 @@ class Core extends Dispatcher
             }
             
             $controllerName = $currentRouteConfig['controller'];
+            
+            $controllerName = $currentRouteConfig['controller'];
+            if (array_key_exists('namespace', $currentRouteConfig)) {
+                $controllerName = $currentRouteConfig['namespace'].'\\'.$controllerName;
+            }
+            
             
             $controller = Controller::getModule($controllerName);
             
@@ -89,7 +95,7 @@ class Core extends Dispatcher
 			
 			return true;
 		}
-		//throw new NotFoundException('Not Found');
+		throw new NotFoundException('Not Found');
 	}
     
     public function make()
@@ -116,26 +122,28 @@ class Core extends Dispatcher
         $response, $controller, $method
     )
     {
-        $annotations = false;//$this->getClassAnnotations($controller, $method);
+        $annotations = $this->getClassAnnotations($controller, $method);
         
         if (!$annotations) {
             return false;
         }
-        
+
+
         foreach ($annotations as $annotation) {
             $params = explode(" ", $annotation);
-            
-            $const = $params[2];
-            
-            if (!defined($const)) {
-                throw new Exception(sprintf('Constant not found %s', $const));
-            }
+
+            $const = trim($params[2]);
+
+//            if (!defined($const)) {
+//                throw new \Exception(sprintf('Constant not found %s', $const));
+//            }
+            $const = constant("Nil\Common\Core\\".$const);
             switch($params[1]) {
-                case 'type': 
-                    $response->setType(constant($const));
+                case 'type':
+                    $response->setType($const);
                     break;
                 case 'action':
-                    $response->setAction(constant($const));
+                    $response->setAction($const);
                     break;
                 default: 
                     break;
@@ -148,7 +156,7 @@ class Core extends Dispatcher
     // TODO: move to Controller
     public function getClassAnnotations($class, $method)
     {
-        $r = new ReflectionMethod($class, $method);       
+        $r = new \ReflectionMethod($class, $method);
        
         $doc = $r->getDocComment();
         
@@ -190,9 +198,14 @@ class Core extends Dispatcher
 
 	private function _hasExistMethodControllerByConfig($currentRouteConfig)
 	{
+	    $controller = $currentRouteConfig['controller'];
+        if (array_key_exists('namespace', $currentRouteConfig)) {
+            $controller = $currentRouteConfig['namespace'].'\\'.$controller;
+        }
+       
 		return $currentRouteConfig &&
 		 	   method_exists(
-				   $currentRouteConfig['controller'],
+				   $controller,
 				   $currentRouteConfig['method']
 			   );
 	}
@@ -209,7 +222,7 @@ class Core extends Dispatcher
             'EngWord',
             'Main',
             'Queue',
-            'RestFulApi',
+            'RESTfulApi',
             'User'  
         );
         

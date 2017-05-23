@@ -1,6 +1,6 @@
 <?php
 
-//namespace Nil\modules\EngWord;
+//namespace Nil\EngWord;
 
 use \Nil\Common\Core\Display;
 use \Nil\Common\Core\Response;
@@ -102,6 +102,12 @@ class EngWord extends Display
         echo $id;
         echo 1;
     }
+
+	public function test2(Response &$response)
+	{
+		$this->fragment = true;
+		echo 1;
+	}
     
     
     public function onRedirect(Response $response)

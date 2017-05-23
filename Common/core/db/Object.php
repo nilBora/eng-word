@@ -1,10 +1,12 @@
 <?php
 
-namespace Nil\Common\Core;
+namespace Nil\DB;
 
+require_once __DIR__.'/exceptions/DataBaseException.php';
 require_once __DIR__.'/IObject.php';
 require_once __DIR__.'/AbstractObject.php';
 require_once __DIR__.'/ObjectPDO.php';
+require_once __DIR__.'/ObjectLog.php';
 
 abstract class Object implements IObject
 {
@@ -22,7 +24,7 @@ abstract class Object implements IObject
         if ($type == 'PDO') {
             $className = 'Object'.$type;
         }
-        $className = '\Nil\Common\Core\\'.$className;
+        $className = '\Nil\DB\\'.$className;
         static::$adapter = new $className($db);
         
         return static::$adapter;

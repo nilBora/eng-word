@@ -6,7 +6,12 @@
 $routes = [
     '/login/'  		  => ['use' => 'User@login', 'auth'=>true, 'role' => 'user'],
     '/logout/'  	  => ['use' => 'User@logout', 'auth'=>true, 'role' => 'user'],
-    '/'		   		  => ['use' => 'EngWord@displayIndex', 'auth'=>true, 'role' => 'user'],
+    '/'		   		  => [
+        'use'       => 'EngWord@displayIndex',
+        'auth'      => true,
+        'role'      => 'user',
+        //'namespace' => 'Nil\EngWord'
+    ],
     '/test/([0-9]+)/' => ['use' => 'EngWord@test', 'auth' => false],
     '/admin/'         => ['use' => 'Admin@defaultIndex', 'auth' => true, 'role' => 'admin'],
     '/api/(.+)/'      => ['use' => 'RESTfulApi@onApiRequest'],

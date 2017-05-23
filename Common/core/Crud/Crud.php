@@ -2,6 +2,8 @@
 
 namespace Nil\Common\Core;
 
+use Nil\DB\Object;
+
 class Crud extends Object {
     private $_tableFile;
     
@@ -24,8 +26,8 @@ class Crud extends Object {
     
     public function invokePhp($matches)
     {
-        //echo addslashes(eval('return '.$matches[1].';'));
-        return '';//addslashes(eval('return '.$matches[1].';'));
+        //TODO: FIX this
+        return addslashes(eval('return '.$matches[1].';'));
     }
     
     public function render()

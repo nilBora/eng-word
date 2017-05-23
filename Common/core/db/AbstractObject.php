@@ -1,6 +1,6 @@
 <?php
 
-namespace Nil\Common\Core;
+namespace Nil\DB;
 
 abstract class AbstractObject implements IObject
 {
@@ -50,6 +50,31 @@ abstract class AbstractObject implements IObject
     
     protected function addLog($queryString)
     {
-        SystemLog::saveQuery($queryString);
+        ObjectLog::saveQuery($queryString);
+    }
+    
+    public function select($sql, $search)
+    {
+        throw new DataBaseException();
+    }
+    
+    public function search($sql, $search, $type = self::FETCH_ALL, $orderBy=false)
+    {
+        throw new DataBaseException();
+    }
+    
+    public function insert($table, $values)
+    {
+        throw new DataBaseException();
+    }
+    
+    public function update($table, $search, $values)
+    {
+        throw new DataBaseException();
+    }
+    
+    public function delete($table, $search)
+    {
+        throw new DataBaseException();
     }
 }

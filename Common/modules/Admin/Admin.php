@@ -1,7 +1,5 @@
 <?php
 
-//namespace Nil\Modules\Admin;
-
 use \Nil\Common\Core\Display;
 use \Nil\Common\Core\Response;
 

@@ -23,6 +23,5 @@ $db = new PDO(
 );
 
 $core = Nil\Common\Core\Core::getInstance();
-$core->db = Nil\Common\Core\Object::factory($db);
-
+$core->db = Nil\DB\Object::factory($db);
 

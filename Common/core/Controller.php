@@ -85,7 +85,9 @@ class Controller extends Dispatcher
             throw new Exception(sprintf("%s class Not found"), $module);
         }
         
-        $pathModule = MODULES_DIR.$module.'/';
+        $baseNameModule = basename(str_replace('\\', '/', $module));
+        
+        $pathModule = MODULES_DIR.$baseNameModule.'/';
         
         $instance = new $module($pathModule);
 

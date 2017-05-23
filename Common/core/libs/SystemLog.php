@@ -2,11 +2,12 @@
 
 namespace Nil\Common\Core;
 
+use Nil\DB\ObjectLog;
+
 class SystemLog
 {
     public static $systemTime;
     public static $systemMemory;
-    public static $queryLog = [];
     
     public static function getMessage($exp)
     {
@@ -52,7 +53,7 @@ class SystemLog
         $systemMemory = memory_get_usage() - static::$systemMemory;
         $systemTime = microtime(true) - static::$systemTime;
         $systemMemory = static::convertMemory($systemMemory);
-        $queryLog = static::$queryLog;
+        $queryLog = ObjectLog::getQueryLog();
         
         $controller = Controller::getInstance();
         $config = $controller->getConfigs();
@@ -60,7 +61,6 @@ class SystemLog
             $profiler = new Profiler();
             $profileMessages = $profiler->getMessages();
         }
-       
 
         ob_start();
 
@@ -77,10 +77,5 @@ class SystemLog
         $i=floor(log($size, 1024));
         
         return @round($size / pow(1024, $i), 2).' '.$unit[$i];
-    }
-    
-    public static function saveQuery($query)
-    {
-        array_push(static::$queryLog, $query);
     }
 }

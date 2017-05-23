@@ -1,6 +1,6 @@
 <?php
 
-namespace Nil\Common\Core;
+use Nil\DB\Object;
 
 class QueueObject extends Object
 {

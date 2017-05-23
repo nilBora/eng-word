@@ -1,6 +1,6 @@
 <?php
 
-use Nil\Common\Core\Object;
+use Nil\DB\Object;
 
 class EngWordObject extends Object
 {

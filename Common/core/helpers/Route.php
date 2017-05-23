@@ -34,13 +34,18 @@ class Route
                     $role = $config['role'];
                 }
                 
+                if (array_key_exists('namespace', $config) && $config['namespace']) {
+                    $namespace = $config['namespace'];
+                }
+                
                 $result = [
                     'uri'        => $uri,
                     'matches'    => $matches,
                     'controller' => $use[0],
                     'method'     => $use[1],
                     'auth'       => !empty($auth) ? $auth : false,
-                    'role'       => !empty($role) ? $role : false
+                    'role'       => !empty($role) ? $role : false,
+                    'namespace'  => !empty($namespace) ? $namespace : false,
                 ];
             }
         }
