@@ -25,7 +25,7 @@ class Crud extends Object {
     public function invokePhp($matches)
     {
         //echo addslashes(eval('return '.$matches[1].';'));
-        return addslashes(eval('return '.$matches[1].';'));
+        return '';//addslashes(eval('return '.$matches[1].';'));
     }
     
     public function render()
