@@ -1,6 +1,6 @@
 <?php
 
-//namespace Nil\EngWord;
+namespace Nil\Modules\EngWord;
 
 use \Nil\Common\Core\Display;
 use \Nil\Common\Core\Response;
@@ -18,7 +18,6 @@ class EngWord extends Display
         $this->controller->includeStatic('test.js');
         
         $content = $this->fetch('index.phtml', $vars);
-        
         $response->setContent($content);
         
         return true;
@@ -106,7 +105,8 @@ class EngWord extends Display
 	public function test2(Response &$response)
 	{
 		$this->fragment = true;
-		echo 1;
+		$response->id = 1;
+		$response->setContent(array('test' => 'text'));
 	}
     
     

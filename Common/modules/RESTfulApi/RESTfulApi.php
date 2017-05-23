@@ -36,8 +36,15 @@ class RESTfulApi extends RestAPI
     
     private function _getWorkModule($moduleName, $methodName)
     {
-        $postfix = 'Api';
-        
+        $postfix = 'Api1';
+        $config = $this->_getConfig();
+        $className = get_class();
+        if (array_key_exists($className, $config)) {
+            if (!empty($config[$className]['namespaces'][$moduleName])) {
+                $moduleName = $config[$className]['namespaces'][$moduleName].$moduleName;
+            }
+        }
+
         if (class_exists($moduleName.$postfix)) {
            $module = $this->controller->getModule($moduleName.$postfix);
            if (method_exists($module, $methodName)) {
@@ -46,5 +53,16 @@ class RESTfulApi extends RestAPI
         }
         
         return $this->controller->getModule($moduleName);
+    }
+
+    private function _getConfig()
+    {
+        $config = [];
+        $configPath = __DIR__.'/config.php';
+        if(file_exists($configPath)) {
+            include $configPath;
+        }
+
+        return $config;
     }
 }

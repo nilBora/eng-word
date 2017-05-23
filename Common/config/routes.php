@@ -10,7 +10,7 @@ $routes = [
         'use'       => 'EngWord@displayIndex',
         'auth'      => true,
         'role'      => 'user',
-        //'namespace' => 'Nil\EngWord'
+        'namespace' => 'Nil\Modules\EngWord'
     ],
     '/test/([0-9]+)/' => ['use' => 'EngWord@test', 'auth' => false],
     '/admin/'         => ['use' => 'Admin@defaultIndex', 'auth' => true, 'role' => 'admin'],

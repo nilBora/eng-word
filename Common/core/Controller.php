@@ -82,7 +82,7 @@ class Controller extends Dispatcher
         }
        
         if (!class_exists($module)) {
-            throw new Exception(sprintf("%s class Not found"), $module);
+            throw new \Exception(sprintf("%s class Not found", $module));
         }
         
         $baseNameModule = basename(str_replace('\\', '/', $module));
