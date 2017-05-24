@@ -9,6 +9,8 @@ class Core extends Dispatcher
 	
 	protected $_sessionData = null;
    
+    private $_config = null;
+    
 	public function __construct()
 	{
 		if (isset(self::$_instance)) {
@@ -17,7 +19,8 @@ class Core extends Dispatcher
 		}
         $this->_initSession();
         $this->_initModules();
-        $this->_route = new Route();
+
+        $this->_route = new Route($this->_config);
 	}
 
 	public static function getInstance()
@@ -46,7 +49,7 @@ class Core extends Dispatcher
 
 		$currentRouteConfig =  $this->_route->pareseUrl();
         $rules = $this->_route->getRules();
-
+        
 		if ($this->_hasExistMethodControllerByConfig($currentRouteConfig)) {
 
 			if ($this->_isAuthRoute($currentRouteConfig)) {
@@ -199,10 +202,10 @@ class Core extends Dispatcher
 	private function _hasExistMethodControllerByConfig($currentRouteConfig)
 	{
 	    $controller = $currentRouteConfig['controller'];
-        if (array_key_exists('namespace', $currentRouteConfig)) {
+        if (!empty($currentRouteConfig['namespace'])) {
             $controller = $currentRouteConfig['namespace'].'\\'.$controller;
         }
-       
+
 		return $currentRouteConfig &&
 		 	   method_exists(
 				   $controller,
@@ -217,6 +220,7 @@ class Core extends Dispatcher
 
 	private function _initModules()
 	{
+	    $config = [];
         $modules = array(
             'Admin',
             'EngWord',
@@ -242,7 +246,13 @@ class Core extends Dispatcher
                 require_once $fileDir;
             }
             
+            $configDir = MODULES_DIR.$module.'/'.'config.php';
+            if (file_exists($configDir)) {
+                include $configDir;
+                $this->_config = array_merge($config);
+            }
         }
+        
 		// spl_autoload_register(function ($class) {
 // 		  
             // $dirPath = MODULES_DIR.$class.'/';

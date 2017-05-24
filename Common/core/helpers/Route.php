@@ -7,7 +7,13 @@ class Route
     private $_requestUri;
     private static $_routes = [];
     private $_rules = [];
-
+    private $_config;
+    
+    public function __construct($config = false)
+    {
+        $this->_config = $config;
+    }
+    
     public function pareseUrl()
     {
         $requestUri = $_SERVER['REQUEST_URI'];
@@ -66,11 +72,34 @@ class Route
         $routes = [];
         require_once COMMON_DIR.'/config/routes.php';
         
-        static::$_routes = array_merge(static::$_routes, $data['routes']);
+        $routesByConfig = $this->_getRoutesByConfig();
+        
+        static::$_routes = array_merge(static::$_routes, $data['routes'], $routesByConfig);
+       
         
         $this->_rules = $data['rules'];
         
         return static::$_routes;
+    }
+    
+    private function _getRoutesByConfig()
+    {
+        $routes = [];
+       
+        if (!$this->_config) {
+            return $routes;
+        }
+        
+        foreach ($this->_config as $config) {
+            if (array_key_exists('routes', $config) && is_array($config['routes'])) {
+
+                foreach ($config['routes'] as $route => $value) {
+                    $routes[$route] = $value;
+                }
+            }
+        }
+        
+        return $routes;
     }
     
     public function getRules()

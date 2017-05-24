@@ -36,7 +36,7 @@ class RESTfulApi extends RestAPI
     
     private function _getWorkModule($moduleName, $methodName)
     {
-        $postfix = 'Api1';
+        $postfix = 'API';
         $config = $this->_getConfig();
         $className = get_class();
         if (array_key_exists($className, $config)) {
@@ -44,7 +44,7 @@ class RESTfulApi extends RestAPI
                 $moduleName = $config[$className]['namespaces'][$moduleName].$moduleName;
             }
         }
-
+        
         if (class_exists($moduleName.$postfix)) {
            $module = $this->controller->getModule($moduleName.$postfix);
            if (method_exists($module, $methodName)) {

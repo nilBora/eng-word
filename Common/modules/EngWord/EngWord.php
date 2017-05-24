@@ -110,11 +110,17 @@ class EngWord extends Display
 	}
     
     
-    public function onRedirect(Response $response)
+    public function onRedirect(Response &$response)
     {
         $response->setAction(Response::ACTION_REDIRECT);
         $response->setUrl('/');
 
         return true;
+    }
+    
+    public function onPathNew(Response &$response)
+    {
+        $this->fragment = true;
+        echo 'path New';
     }
 }

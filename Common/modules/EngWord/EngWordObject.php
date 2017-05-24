@@ -1,5 +1,7 @@
 <?php
 
+namespace Nil\Modules\EngWord;
+
 use Nil\DB\Object;
 
 class EngWordObject extends Object
