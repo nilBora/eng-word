@@ -8,7 +8,8 @@ class Controller extends Dispatcher
     private $_properties = [];
     private static $_modules = [];
     private static $_instance = null;
-    protected $config;
+
+    private $_config;
     
     public function __construct()
     {
@@ -17,7 +18,7 @@ class Controller extends Dispatcher
             throw new Exception($message);
         }
         parent::__construct();
-        $this->_core = Core::getInstance();
+       // $this->_core = Core::getInstance();
         $this->_setConfig();
     }
     
@@ -32,26 +33,26 @@ class Controller extends Dispatcher
     
     private function _setConfig()
     {
-        $this->config = $GLOBALS;
+        $this->_config = $GLOBALS;
     }
-    
+
     public function getConfig($key)
     {
-        if (!array_key_exists($key, $this->config)) {
+        if (!array_key_exists($key, $this->_config)) {
             throw new Exception('Not found config with key: '.$key);
         }
         
-        return $this->config[$key];
+        return $this->_config[$key];
     }
     
     public function getConfigs()
     {
-        return $this->config;
+        return $this->_config;
     }
     
     public function getCurrentUserID()
     {
-        return $this->_core->getUserID();
+        return  Core::getInstance()->getUserID();
     }
 
     public function redirect($url)
@@ -65,12 +66,12 @@ class Controller extends Dispatcher
 
     public function setSession($key, $value)
     {
-        $this->_core->_setSession($key, $value);
+        Core::getInstance()->_setSession($key, $value);
     }
 
     public function doClearSession()
     {
-        $this->_core->doClearSession();
+        Core::getInstance()->doClearSession();
 
         return true;
     }
@@ -114,7 +115,50 @@ class Controller extends Dispatcher
     {
         return $this->_properties;
     }
-    
+
+    public function includeModules()
+    {
+        $configModules = [];
+        $modules = array(
+            'Admin',
+            'EngWord',
+            'Main',
+            'Queue',
+            'RESTfulApi',
+            'User'
+        );
+
+        foreach ($modules as $module) {
+            $fileDir = MODULES_DIR.$module.'/'.$module.'.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+
+            $fileDir = MODULES_DIR.$module.'/'.$module.'Object.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+
+            $fileDir = MODULES_DIR.$module.'/'.$module.'Api.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+
+            $configDir = MODULES_DIR.$module.'/'.'config.php';
+            if (file_exists($configDir)) {
+                include $configDir;
+                if (!empty($config)) {
+                    $configModules = array_merge($configModules, $config);
+                }
+
+            }
+        }
+
+        $this->_config = array_merge($configModules, $this->_config);
+    }
+
+
+
     public function createCrudInstance($table)
     {
         

@@ -1,5 +1,5 @@
 <?php
 
-$config['RESTfulApi']['namespaces'] = [
+$config['modules']['RESTfulApi']['namespaces'] = [
     'EngWord' => 'Nil\Modules\EngWord\\'
 ];

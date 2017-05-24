@@ -1,8 +1,9 @@
 <?php
 
-//namespace Nil\Modules\EngWord;
+namespace Nil\Modules\EngWord;
 
 use \Nil\Common\Core\RestAPI;
+use \Nil\Common\Core\Response;
 
 class EngWordApi extends RestAPI
 {

@@ -20,7 +20,7 @@ class Core extends Dispatcher
         $this->_initSession();
         $this->_initModules();
 
-        $this->_route = new Route($this->_config);
+        $this->_route = new Route();
 	}
 
 	public static function getInstance()
@@ -201,7 +201,12 @@ class Core extends Dispatcher
 
 	private function _hasExistMethodControllerByConfig($currentRouteConfig)
 	{
-	    $controller = $currentRouteConfig['controller'];
+        if (!array_key_exists('controller', $currentRouteConfig)) {
+            throw new NotFoundException();
+        }
+
+        $controller = $currentRouteConfig['controller'];
+
         if (!empty($currentRouteConfig['namespace'])) {
             $controller = $currentRouteConfig['namespace'].'\\'.$controller;
         }
@@ -220,52 +225,8 @@ class Core extends Dispatcher
 
 	private function _initModules()
 	{
-	    $config = [];
-        $modules = array(
-            'Admin',
-            'EngWord',
-            'Main',
-            'Queue',
-            'RESTfulApi',
-            'User'  
-        );
-        
-        foreach ($modules as $module) {
-            $fileDir = MODULES_DIR.$module.'/'.$module.'.php';
-            if (file_exists($fileDir)) {
-                require_once $fileDir;
-            }
-            
-            $fileDir = MODULES_DIR.$module.'/'.$module.'Object.php';
-            if (file_exists($fileDir)) {
-                require_once $fileDir;
-            }
-            
-            $fileDir = MODULES_DIR.$module.'/'.$module.'Api.php';
-            if (file_exists($fileDir)) {
-                require_once $fileDir;
-            }
-            
-            $configDir = MODULES_DIR.$module.'/'.'config.php';
-            if (file_exists($configDir)) {
-                include $configDir;
-                $this->_config = array_merge($config);
-            }
-        }
-        
-		// spl_autoload_register(function ($class) {
-// 		  
-            // $dirPath = MODULES_DIR.$class.'/';
-//            
-            // $dirPath = str_replace(['Object'], '', $dirPath);
-//            
-            // $filePath = $dirPath.$class.'.php';
-//           
-            // if (!file_exists($filePath)) {
-                // throw new \Exception("File Class Not Found: ". $filePath);
-            // }
-            // require_once $filePath;
-        // });
+        $controller = Controller::getInstance();
+        $controller->includeModules();
     }
 	
 	public function getUserID()

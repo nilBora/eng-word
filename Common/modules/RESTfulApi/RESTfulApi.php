@@ -17,7 +17,8 @@ class RESTfulApi extends RestAPI
        $methodName = $chunks[3];
        
        $module = $this->_getWorkModule($moduleName, $methodName);
-       
+
+
 
        $params = array();
        
@@ -39,13 +40,12 @@ class RESTfulApi extends RestAPI
         $postfix = 'API';
         $config = $this->_getConfig();
         $className = get_class();
-        if (array_key_exists($className, $config)) {
-            if (!empty($config[$className]['namespaces'][$moduleName])) {
-                $moduleName = $config[$className]['namespaces'][$moduleName].$moduleName;
-            }
+        if (!empty($config['modules'][$className]['namespaces'][$moduleName])) {
+            $moduleName = $config['modules'][$className]['namespaces'][$moduleName].$moduleName;
         }
-        
+
         if (class_exists($moduleName.$postfix)) {
+
            $module = $this->controller->getModule($moduleName.$postfix);
            if (method_exists($module, $methodName)) {
                return $module;

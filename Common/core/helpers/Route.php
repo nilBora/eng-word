@@ -69,6 +69,7 @@ class Route
 
     private function _getRoutes()
     {
+
         $routes = [];
         require_once COMMON_DIR.'/config/routes.php';
         
@@ -84,13 +85,15 @@ class Route
     
     private function _getRoutesByConfig()
     {
+        $configs = Controller::getInstance()->getConfig('modules');
+
         $routes = [];
        
-        if (!$this->_config) {
+        if (!$configs) {
             return $routes;
         }
         
-        foreach ($this->_config as $config) {
+        foreach ($configs as $config) {
             if (array_key_exists('routes', $config) && is_array($config['routes'])) {
 
                 foreach ($config['routes'] as $route => $value) {
