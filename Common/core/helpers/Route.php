@@ -23,7 +23,7 @@ class Route
         /* uri => array('controller'  => 'method') */
         $result = [];
 
-        $routes = $this->_getRoutes();
+        $routes = $this->getRoutes();
 
         foreach ($routes as $uri => $config) {
             $uri  = '#^'.$uri.'$#';
@@ -67,11 +67,11 @@ class Route
         static::$_routes[$url] = $params;
     }
 
-    private function _getRoutes()
+    public function getRoutes()
     {
 
         $routes = [];
-        require_once COMMON_DIR.'/config/routes.php';
+        require COMMON_DIR.'/config/routes.php';
         
         $routesByConfig = $this->_getRoutesByConfig();
         
@@ -85,7 +85,7 @@ class Route
     
     private function _getRoutesByConfig()
     {
-        $configs = Controller::getInstance()->getConfig('modules');
+        $configs = App::getInstance()->getConfig('modules');
 
         $routes = [];
        

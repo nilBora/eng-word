@@ -22,6 +22,6 @@ $db = new PDO(
     $GLOBALS['dsn']['password']
 );
 
-$core = Nil\Common\Core\Core::getInstance();
+$core = Nil\Common\Core\App::getInstance();
 $core->db = Nil\DB\Object::factory($db);
 

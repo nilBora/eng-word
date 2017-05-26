@@ -55,7 +55,7 @@ class SystemLog
         $systemMemory = static::convertMemory($systemMemory);
         $queryLog = ObjectLog::getQueryLog();
         
-        $controller = Controller::getInstance();
+        $controller = App::getInstance();
         $config = $controller->getConfigs();
         if (!empty($config['dev']['profiler']) && $config['dev']['profiler']) {
             $profiler = new Profiler();

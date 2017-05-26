@@ -11,7 +11,7 @@ abstract class AbstractModule extends Dispatcher
     {
         parent::__construct();
         
-        $this->controller = Controller::getInstance();
+        $this->controller = App::getInstance();//Controller::getInstance();
         $this->request = new Request();
     }
     

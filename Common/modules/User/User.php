@@ -19,7 +19,7 @@ class User extends Display
 				$this->controller->setSession('auth', md5($user['id']));
 				$this->controller->setSession('user_id', $user['id']);
 				$redirectUri = '/';
-				if (!empty($_REQUEST['redirect_uri'])) {
+				if (!empty($_REQUEST['redirect_uri']) && $_REQUEST['redirect_uri'] != '/login/') {
 					$redirectUri = $_REQUEST['redirect_uri'];
 				}
 				$this->controller->redirect($redirectUri);

@@ -5,7 +5,7 @@ require_once CORE_DIR.'Dispatcher.php';
 require_once CORE_DIR.'Controller.php';
 require_once HELPERS_DIR.'Route.php';
 require_once CORE_DIR.'/db/Object.php';
-require_once CORE_DIR.'Core.php';
+require_once CORE_DIR.'App.php';
 
 /* include modules */
 require_once CORE_DIR.'module/IModule.php';

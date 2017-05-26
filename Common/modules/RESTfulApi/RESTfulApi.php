@@ -51,7 +51,7 @@ class RESTfulApi extends RestAPI
                return $module;
            }
         }
-        
+
         return $this->controller->getModule($moduleName);
     }
 

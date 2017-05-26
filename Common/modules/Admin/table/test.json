@@ -8,7 +8,7 @@
         },
         {
             "name": "name",
-            "caption": "UserID=%%%\Nil\Common\Core\Controller::getInstance()->getCurrentUserID()%%%"
+            "caption": "UserID=%%%\Nil\Common\Core\App::getInstance()->getCurrentUserID()%%%"
         },
         {
             "name": "Path",

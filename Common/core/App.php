@@ -2,11 +2,13 @@
 
 namespace Nil\Common\Core;
 
-class Core extends Dispatcher
+class App extends Dispatcher
 {
 	private static $_instance = null;
     private $_route;
-	
+    private $_properties = [];
+	private static $_modules = [];
+    
 	protected $_sessionData = null;
    
     private $_config = null;
@@ -14,11 +16,12 @@ class Core extends Dispatcher
 	public function __construct()
 	{
 		if (isset(self::$_instance)) {
-			$message = 'Instance already defined use Core::getInstance';
+			$message = 'Instance already defined use App::getInstance';
 			throw new Exception($message);
 		}
+        $this->_setConfig();
         $this->_initSession();
-        $this->_initModules();
+        $this->includeModules();
 
         $this->_route = new Route();
 	}
@@ -55,7 +58,7 @@ class Core extends Dispatcher
 			if ($this->_isAuthRoute($currentRouteConfig)) {
 			    
 			    $response = new Response();
-			    $user = Controller::getModule('User');
+			    $user = static::getModule('User');
                 $user->login($response);
                 $response->send($user);
 				return true;
@@ -73,7 +76,7 @@ class Core extends Dispatcher
             }
             
             
-            $controller = Controller::getModule($controllerName);
+            $controller = static::getModule($controllerName);
             
 			$method = $currentRouteConfig['method'];
 			
@@ -183,7 +186,7 @@ class Core extends Dispatcher
         }
         
         $userID = $this->getUserID();
-        $userModule = Controller::getModule('User');
+        $userModule = static::getModule('User');
         $user = $userModule->getUserByID($userID);
         
         if (!array_key_exists($role, $rules)) {
@@ -222,12 +225,6 @@ class Core extends Dispatcher
 	{
 		return $currentRouteConfig['auth'] && !$this->_isAuthInSessionData();
 	}
-
-	private function _initModules()
-	{
-        $controller = Controller::getInstance();
-        $controller->includeModules();
-    }
 	
 	public function getUserID()
 	{
@@ -244,7 +241,7 @@ class Core extends Dispatcher
 			   && $this->_sessionData['auth'];
 	}
 	
-	public function _setSession($key, $value)
+	public function setSession($key, $value)
 	{
 		$this->_sessionData[$key] = $value;
 		$_SESSION['sessionData'][$key] = $value;
@@ -258,4 +255,132 @@ class Core extends Dispatcher
 
 		return true;
 	}
+    
+    
+    private function _setConfig()
+    {
+        $this->_config = $GLOBALS;
+    }
+
+    public function getConfig($key)
+    {
+        if (!array_key_exists($key, $this->_config)) {
+            throw new Exception('Not found config with key: '.$key);
+        }
+        
+        return $this->_config[$key];
+    }
+    
+    public function getConfigs()
+    {
+        return $this->_config;
+    }
+    
+    public function getCurrentUserID()
+    {
+        return $this->getUserID();
+    }
+
+    public function redirect($url)
+    {
+        //FIXME
+        $href = 'http://' . $_SERVER['SERVER_NAME'];
+        header("HTTP/1.1 301 Moved Permanently");
+        header("Location: " . $href . $url);
+        exit;
+    }
+    
+    public static function getModule($module = 'User')
+    {
+        if (array_key_exists($module, static::$_modules)) {
+            return static::$_modules[$module];
+        }
+       
+        if (!class_exists($module)) {
+            throw new \Exception(sprintf("%s class Not found", $module));
+        }
+        
+        $baseNameModule = basename(str_replace('\\', '/', $module));
+        
+        $pathModule = MODULES_DIR.$baseNameModule.'/';
+        
+        $instance = new $module($pathModule);
+
+        $moduleObject = $module.'Object';
+        if (file_exists($pathModule.$moduleObject.'.php')) {
+            $instance->object = new $moduleObject();
+        }
+        static::$_modules[$module] = $instance;
+        
+        return $instance;
+    }
+    
+    public function includeStatic($name)
+    {
+        $this->setProperty($name, 'path');
+    }
+    
+    public function setProperty($name, $path)
+    {
+        $this->_properties[$name] = $path;
+    }
+    
+    public function getProperties()
+    {
+        return $this->_properties;
+    }
+
+    public function includeModules()
+    {
+        $configModules = [];
+        $modules = array(
+            'Admin',
+            'EngWord',
+            'Main',
+            'Queue',
+            'RESTfulApi',
+            'User'
+        );
+
+        foreach ($modules as $module) {
+            $fileDir = MODULES_DIR.$module.'/'.$module.'.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+
+            $fileDir = MODULES_DIR.$module.'/'.$module.'Object.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+
+            $fileDir = MODULES_DIR.$module.'/'.$module.'Api.php';
+            if (file_exists($fileDir)) {
+                require_once $fileDir;
+            }
+
+            $configDir = MODULES_DIR.$module.'/'.'config.php';
+            if (file_exists($configDir)) {
+                include $configDir;
+                if (!empty($config)) {
+                    $configModules = array_merge($configModules, $config);
+                }
+
+            }
+        }
+
+        $this->_config = array_merge($configModules, $this->_config);
+    }
+
+    public function createCrudInstance($table)
+    {
+        $whoInvoke = debug_backtrace();
+        $path = dirname($whoInvoke[0]['file']).'/table/';
+        
+        $options = [
+            'table_path' => $path
+        ];
+        $crud = new Crud($table, $options);
+        
+        return $crud;
+    }
 }
