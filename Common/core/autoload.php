@@ -2,7 +2,7 @@
 
 require_once HELPERS_DIR.'HelpersFunctions.php';
 require_once CORE_DIR.'Dispatcher.php';
-require_once CORE_DIR.'Controller.php';
+//require_once CORE_DIR.'Controller.php';
 require_once HELPERS_DIR.'Route.php';
 require_once CORE_DIR.'/db/Object.php';
 require_once CORE_DIR.'App.php';
