@@ -41,7 +41,8 @@ class Response extends \ArrayObject
         
         if ($this->_isTypeJson()) {
             echo json_encode(['content' => $this->content]);
-            exit;
+            
+            return true;
         }
         
         if ($this->type == static::TYPE_API) {

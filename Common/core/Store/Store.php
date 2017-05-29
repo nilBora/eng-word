@@ -4,7 +4,7 @@ namespace Nil\Common\Core;
 
 use Nil\DB\Object;
 
-class Crud extends Object {
+class Store extends Object {
     private $_tableFile;
     private $_config;
     

@@ -12,7 +12,7 @@ class Main extends Display
 
             $login = $_POST['email'];
             $password = $_POST['password'];
-            $userController = $this->controller->User;
+            $userController = $this->app->User;
             $user = $userController->auth($login, $password);
 
             if ($user) {

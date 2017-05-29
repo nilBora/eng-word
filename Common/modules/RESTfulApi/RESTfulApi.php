@@ -46,13 +46,13 @@ class RESTfulApi extends RestAPI
 
         if (class_exists($moduleName.$postfix)) {
 
-           $module = $this->controller->getModule($moduleName.$postfix);
+           $module = $this->app->getModule($moduleName.$postfix);
            if (method_exists($module, $methodName)) {
                return $module;
            }
         }
 
-        return $this->controller->getModule($moduleName);
+        return $this->app->getModule($moduleName);
     }
 
     private function _getConfig()

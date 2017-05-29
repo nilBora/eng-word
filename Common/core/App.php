@@ -150,6 +150,9 @@ class App extends Dispatcher
                     break;
                 case 'action':
                     $response->setAction($const);
+                    if ($this->_hasRedirectUrl($const, $params)) {
+                        $response->setUrl($params[3]);    
+                    }
                     break;
                 default: 
                     break;
@@ -158,8 +161,14 @@ class App extends Dispatcher
         
         return true;
     }
+    // TODO: to Anatotation Helper
+    private function _hasRedirectUrl($action, $params)
+    {
+        return $action == Response::ACTION_REDIRECT && 
+               array_key_exists(3, $params);
+    }
     
-    // TODO: move to Controller
+    // TODO: move to helper Annotations Controller
     public function getClassAnnotations($class, $method)
     {
         $r = new \ReflectionMethod($class, $method);
@@ -371,7 +380,7 @@ class App extends Dispatcher
         $this->_config = array_merge($configModules, $this->_config);
     }
 
-    public function createCrudInstance($table)
+    public function createStoreInstance($table)
     {
         $whoInvoke = debug_backtrace();
         $path = dirname($whoInvoke[0]['file']).'/table/';
@@ -379,7 +388,7 @@ class App extends Dispatcher
         $options = [
             'table_path' => $path
         ];
-        $crud = new Crud($table, $options);
+        $crud = new Store($table, $options);
         
         return $crud;
     }
