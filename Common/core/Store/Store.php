@@ -42,7 +42,7 @@ class Store extends Object {
         }
         
         if (!array_key_exists('fields', $data)) {
-            throw new CrudException('Not found table field');
+            throw new CrudException('Not found fields field');
         }
         
         $select = '';
@@ -54,13 +54,7 @@ class Store extends Object {
         }
         $select = trim($select, ', ');
         $sql = "SELECT ".$select." FROM ".$data['table'];
-        $result = $this->search($sql);
-
-        $prepareData = [
-            'result'  => $result,
-            'columns' => $columns  
-        ];
-        
+        $result = $this->search($sql);        
         
         $vars = [
             'table' => $result,
@@ -72,7 +66,7 @@ class Store extends Object {
         $response->setContent($display->fetch('table.phtml', $vars));
         
         
-        return $prepareData;
+        return true;
     }
     
     public function create($name)

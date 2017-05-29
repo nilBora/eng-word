@@ -40,6 +40,7 @@
                                         <?php echo $name; ?>
                                     </th>
                                     <?php } ?>
+                                    <th>&nbsp;</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -48,6 +49,12 @@
                                     <?php foreach ($columns as $key => $name) { ?>
                                         <td><?php echo $row[$key]; ?></td>
                                     <?php } ?>
+                                    <td>
+                                        <button type="button" class="btn btn-default js-edit-row" 
+                                                data-id="<?php echo $row['id']?>">
+                                            Edit
+                                        </button>
+                                    </td>
                                 </tr>
                                 <?php } ?>
                                 </tbody>
