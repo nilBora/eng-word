@@ -38,11 +38,11 @@ class Store extends Object {
         $data = json_decode(($parseJson), true);
 
         if (!array_key_exists('table', $data)) {
-            throw new CrudException('Not found table field');
+            throw new StoreException('Not found table field');
         }
         
         if (!array_key_exists('fields', $data)) {
-            throw new CrudException('Not found fields field');
+            throw new StoreException('Not found fields field');
         }
         
         $select = '';
@@ -75,6 +75,6 @@ class Store extends Object {
     }
 }
 
-class CrudException extends \Exception
+class StoreException extends \Exception
 {
 }
