@@ -6,6 +6,7 @@ use Nil\DB\Object;
 
 class Crud extends Object {
     private $_tableFile;
+    private $_config;
     
     public function __construct($table, $config)
     {
@@ -13,7 +14,7 @@ class Crud extends Object {
         if (!file_exists($fileName)) {
             throw new Exception('Not found file:'.$fileName);
         }
-        
+        $this->_config = $config;
         $this->_tableFile = $config['table_path'].$table.'.json'; 
     }
     
@@ -30,24 +31,56 @@ class Crud extends Object {
         return addslashes(eval('return '.$matches[1].';'));
     }
     
-    public function render()
+    public function render(Response &$response)
     {
         $parseJson = $this->_parse();
         
-        $parseData = json_decode(($parseJson), true);
+        $data = json_decode(($parseJson), true);
 
-        if (!array_key_exists('table', $parseData)) {
-            throw new Exception('Not found table field');
+        if (!array_key_exists('table', $data)) {
+            throw new CrudException('Not found table field');
         }
-        $sql = "SELECT * FROM ".$parseData['table'];
+        
+        if (!array_key_exists('fields', $data)) {
+            throw new CrudException('Not found table field');
+        }
+        
+        $select = '';
+        $columns = [];
+        foreach ($data['fields'] as $key => $field) {
+            $select .= $field['name'].', ';
+            
+            $columns[$field['name']] = $field['caption'];    
+        }
+        $select = trim($select, ', ');
+        $sql = "SELECT ".$select." FROM ".$data['table'];
         $result = $this->search($sql);
 
+        $prepareData = [
+            'result'  => $result,
+            'columns' => $columns  
+        ];
         
-        return $result;
+        
+        $vars = [
+            'table' => $result,
+            'columns' => $columns
+        ];
+        
+        $display = new Display($this->_config['table_path']);
+        
+        $response->setContent($display->fetch('table.phtml', $vars));
+        
+        
+        return $prepareData;
     }
     
     public function create($name)
     {
         
     }
+}
+
+class CrudException extends \Exception
+{
 }

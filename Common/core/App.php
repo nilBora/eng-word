@@ -58,7 +58,7 @@ class App extends Dispatcher
 			if ($this->_isAuthRoute($currentRouteConfig)) {
 			    
 			    $response = new Response();
-			    $user = static::getModule('User');
+			    $user = $this->getModule('User');
                 $user->login($response);
                 $response->send($user);
 				return true;
@@ -76,7 +76,7 @@ class App extends Dispatcher
             }
             
             
-            $controller = static::getModule($controllerName);
+            $controller = $this->getModule($controllerName);
             
 			$method = $currentRouteConfig['method'];
 			
@@ -186,7 +186,7 @@ class App extends Dispatcher
         }
         
         $userID = $this->getUserID();
-        $userModule = static::getModule('User');
+        $userModule = $this->getModule('User');
         $user = $userModule->getUserByID($userID);
         
         if (!array_key_exists($role, $rules)) {
@@ -290,7 +290,7 @@ class App extends Dispatcher
         exit;
     }
     
-    public static function getModule($module = 'User')
+    public function getModule($module = 'User')
     {
         if (array_key_exists($module, static::$_modules)) {
             return static::$_modules[$module];

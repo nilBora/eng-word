@@ -87,7 +87,16 @@ class User extends Display
 
 		return new UserValuesObject($data);
 	}
-
+    
+    public function onShowUsers(Response &$response)
+    {
+        $crud = $this->controller->createCrudInstance('users');
+        
+        $crud->render($response);
+        
+        return true;
+    }
+    
 	public function load()
 	{
 

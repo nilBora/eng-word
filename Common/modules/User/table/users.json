@@ -1,0 +1,22 @@
+{
+    "table": "users",
+    
+    "fields": [
+        {
+            "name": "id",
+            "caption": "ID"
+        },
+        {
+            "name": "name",
+            "caption": "Name"
+        },
+        {
+            "name": "email",
+            "caption": "E-mail"
+        },
+        {
+            "name": "role",
+            "caption": "Role"
+        }
+    ]
+}
