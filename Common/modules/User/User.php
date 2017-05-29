@@ -16,13 +16,13 @@ class User extends Display
 			$user = $this->auth($login, $password);
 
 			if ($user) {
-				$this->controller->setSession('auth', md5($user['id']));
-				$this->controller->setSession('user_id', $user['id']);
+				$this->app->setSession('auth', md5($user['id']));
+				$this->app->setSession('user_id', $user['id']);
 				$redirectUri = '/';
 				if (!empty($_REQUEST['redirect_uri']) && $_REQUEST['redirect_uri'] != '/login/') {
 					$redirectUri = $_REQUEST['redirect_uri'];
 				}
-				$this->controller->redirect($redirectUri);
+				$this->app->redirect($redirectUri);
 			}
 		}
         $this->fragment = true;
@@ -32,8 +32,8 @@ class User extends Display
 
 	public function logout()
 	{
-		$this->controller->doClearSession();
-		$this->controller->redirect('/');
+		$this->app->doClearSession();
+		$this->app->redirect('/');
 	}
 
 	public function getUserIDByToken($token)
@@ -88,6 +88,15 @@ class User extends Display
 		return new UserValuesObject($data);
 	}
 
+    public function onShowUsers(Response &$response)
+    {
+        $crud = $this->app->createStoreInstance('users');
+        
+        $crud->render($response);
+
+        return true;
+    }
+    
 	public function load()
 	{
 

@@ -13,7 +13,9 @@ class Container
         
         foreach ($modules as $module => $values) {
             $params = [];
-            $controller = App::getModule($module);
+
+            $controller = App::getInstance()->getModule($module);
+
             if (!array_key_exists('method', $values)) {
                 continue;
             }

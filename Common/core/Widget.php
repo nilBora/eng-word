@@ -6,7 +6,8 @@ class Widget
 {    
     public function __call($name, $params)
     {
-        $controller = App::getModule($name);
+        $controller = App::getInstance()->getModule($name);
+
         $args = [];
         call_user_func_array(
             array($controller, $params[0]),
@@ -16,7 +17,8 @@ class Widget
     
     public function show($controller, $method, $params = [])
     {
-        $controller = App::getModule($controller);
+        $controller = App::getInstance()->getModule($controller);
+
         call_user_func_array(
             array($controller, $method),
             $params

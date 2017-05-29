@@ -58,7 +58,7 @@ class App extends Dispatcher
 			if ($this->_isAuthRoute($currentRouteConfig)) {
 			    
 			    $response = new Response();
-			    $user = static::getModule('User');
+			    $user = $this->getModule('User');
                 $user->login($response);
                 $response->send($user);
 				return true;
@@ -74,9 +74,8 @@ class App extends Dispatcher
             if (array_key_exists('namespace', $currentRouteConfig)) {
                 $controllerName = $currentRouteConfig['namespace'].'\\'.$controllerName;
             }
-            
-            
-            $controller = static::getModule($controllerName);
+
+            $controller = $this->getModule($controllerName);
 
 			$method = $currentRouteConfig['method'];
 
@@ -156,6 +155,9 @@ class App extends Dispatcher
                     break;
                 case 'action':
                     $response->setAction($const);
+                    if ($this->_hasRedirectUrl($const, $params)) {
+                        $response->setUrl($params[3]);    
+                    }
                     break;
                 default: 
                     break;
@@ -164,8 +166,14 @@ class App extends Dispatcher
         
         return true;
     }
+    // TODO: to Anatotation Helper
+    private function _hasRedirectUrl($action, $params)
+    {
+        return $action == Response::ACTION_REDIRECT && 
+               array_key_exists(3, $params);
+    }
     
-    // TODO: move to Controller
+    // TODO: move to helper Annotations Controller
     public function getClassAnnotations($class, $method)
     {
         $r = new \ReflectionMethod($class, $method);
@@ -192,7 +200,7 @@ class App extends Dispatcher
         }
         
         $userID = $this->getUserID();
-        $userModule = static::getModule('User');
+        $userModule = $this->getModule('User');
         $user = $userModule->getUserByID($userID);
         
         if (!array_key_exists($role, $rules)) {
@@ -296,7 +304,7 @@ class App extends Dispatcher
         exit;
     }
     
-    public static function getModule($module = 'User')
+    public function getModule($module = 'User')
     {
         if (array_key_exists($module, static::$_modules)) {
             return static::$_modules[$module];
@@ -377,7 +385,7 @@ class App extends Dispatcher
         $this->_config = array_merge($configModules, $this->_config);
     }
 
-    public function createCrudInstance($table)
+    public function createStoreInstance($table)
     {
         $whoInvoke = debug_backtrace();
         $path = dirname($whoInvoke[0]['file']).'/table/';
@@ -385,7 +393,7 @@ class App extends Dispatcher
         $options = [
             'table_path' => $path
         ];
-        $crud = new Crud($table, $options);
+        $crud = new Store($table, $options);
         
         return $crud;
     }

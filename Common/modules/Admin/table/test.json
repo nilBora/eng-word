@@ -7,13 +7,20 @@
             "caption": "ID"
         },
         {
-            "name": "name",
-            "caption": "UserID=%%%\Nil\Common\Core\App::getInstance()->getCurrentUserID()%%%"
+            "name": "cdate",
+            "caption": "Date"
         },
         {
-            "name": "Path",
-            "caption": "%%%__DIR__%%%",
-            "value": "<?php echo __DIR__; ?>"
+            "name": "word",
+            "caption": "Word"
+        },
+        {
+            "name": "translate",
+            "caption": "Traslate"
+        },
+        {
+            "name": "frequency",
+            "caption": "Frequency"
         }
     ]
 }

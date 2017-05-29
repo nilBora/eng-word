@@ -25,7 +25,7 @@ class Display extends AbstractModule implements IModule
         $this->widget = new Widget();
         
         $vars['content'] = $content;
-        $vars['infoPage'] = $this->controller->getProperties();
+        $vars['infoPage'] = $this->app->getProperties();
         
         $content = $this->fetch($layout, $vars);
         

@@ -15,7 +15,7 @@ class EngWord extends Display
     {
         $vars = array();
       
-        $this->controller->includeStatic('test.js');
+        $this->app->includeStatic('test.js');
         
         $content = $this->fetch('index.phtml', $vars);
         $response->setContent($content);
