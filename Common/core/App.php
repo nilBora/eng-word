@@ -77,32 +77,38 @@ class App extends Dispatcher
             
             
             $controller = static::getModule($controllerName);
-            
+
 			$method = $currentRouteConfig['method'];
-			
-			$params = [];
-            $response = new Response();
-            $params[] = &$response;
-			$maches = $currentRouteConfig['matches'];
-			$params = array_merge($params, $maches);
-            
-			call_user_func_array(
-				array($controller, $method),
-				$params
-			);
-            
-            $this->_doPrepareResponseByAnnotationss(
-			    $response,
-			    $controller,
-			    $method
-            );
-            
-			$response->send($controller);
-			
+
+            $this->call($controller, $method, $currentRouteConfig['matches']);
+
 			return true;
 		}
 		throw new NotFoundException('Not Found');
 	}
+
+    public function call($controller, $method, $params = [], $option = [])
+    {
+        $response = new Response();
+        $args = [];
+        $args[] = &$response;
+        $params = array_merge($params, $args);
+
+        call_user_func_array(
+            array($controller, $method),
+            $params
+        );
+
+        $this->_doPrepareResponseByAnnotationss(
+            $response,
+            $controller,
+            $method
+        );
+
+        $response->send($controller);
+
+        return true;
+    }
     
     public function make()
     {

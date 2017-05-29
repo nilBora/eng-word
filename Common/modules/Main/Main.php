@@ -1,6 +1,6 @@
 <?php
 
-namespace Nil\modules\Main;
+//namespace Nil\modules\Main;
 
 use \Nil\Common\Core\Display;
 

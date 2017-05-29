@@ -32,7 +32,7 @@ class RESTfulApi extends RestAPI
             $params
        );
       
-       //$response->send($module);
+       $response->send($module);
     }
     
     private function _getWorkModule($moduleName, $methodName)

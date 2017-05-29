@@ -1,5 +1,5 @@
 <?php
-
+use Nil\Common\Core\App;
 class Container
 {
     public static function show($container)
@@ -13,7 +13,7 @@ class Container
         
         foreach ($modules as $module => $values) {
             $params = [];
-            $controller = Controller::getModule($module);
+            $controller = App::getModule($module);
             if (!array_key_exists('method', $values)) {
                 continue;
             }
