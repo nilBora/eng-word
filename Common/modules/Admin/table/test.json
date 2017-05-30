@@ -4,23 +4,28 @@
     "fields": [
         {
             "name": "id",
-            "caption": "ID"
+            "caption": "ID",
+            "type": "input"
         },
         {
             "name": "cdate",
-            "caption": "Date"
+            "caption": "Date",
+            "type": "input"
         },
         {
             "name": "word",
-            "caption": "Word"
+            "caption": "Word",
+            "type": "input"
         },
         {
             "name": "translate",
-            "caption": "Traslate"
+            "caption": "Traslate",
+            "type": "input"
         },
         {
             "name": "frequency",
-            "caption": "Frequency"
+            "caption": "Frequency",
+            "type": "input"
         }
     ]
 }
