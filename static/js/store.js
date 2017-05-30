@@ -1,6 +1,7 @@
 var Store = {
     init: function() {
         this.onEditRow();
+        this.onCloseModal();
     },
     
     onEditRow: function() {
@@ -12,6 +13,12 @@ var Store = {
                  jQuery('.js-table-edit').modal();
             });
         })
+    },
+    
+    onCloseModal: function() {
+        jQuery('body').on('hide.bs.modal', '.js-table-edit', function () {
+            jQuery(this).detach();
+        });
     }
 }
 
