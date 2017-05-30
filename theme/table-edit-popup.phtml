@@ -6,7 +6,20 @@
         <h4 class="modal-title">Modal title</h4>
       </div>
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+          <form>
+              <?php foreach ($fields as $field) {
+                        $vars = $field;
+                        $vars['value'] = $result[$field['name']];
+                        
+                        echo $store->fetchParser($field['type'], $vars);
+                    }
+              ?>
+              <?php 
+                
+                    
+                ?>
+                
+          </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -33,10 +33,11 @@ class Store extends Object {
     
     public function render(Response &$response)
     {
+        
         $parseJson = $this->_parse();
         
         $data = json_decode(($parseJson), true);
-
+        
         if (!array_key_exists('table', $data)) {
             throw new StoreException('Not found table field');
         }
@@ -44,6 +45,11 @@ class Store extends Object {
         if (!array_key_exists('fields', $data)) {
             throw new StoreException('Not found fields field');
         }
+        
+        if (array_key_exists('ajax', $_REQUEST) && array_key_exists('edit', $_REQUEST)) {
+            $this->_doShowEditForm($data);
+        }
+        
         
         $select = '';
         $columns = [];
@@ -71,6 +77,45 @@ class Store extends Object {
     
     public function create($name)
     {
+        
+    }
+    
+    private function _doShowEditForm($data)
+    {
+        if (!array_key_exists('id', $_REQUEST)) {
+            return false;
+        }
+        
+        $sql = "SELECT * FROM ".$data['table'];
+        $search = [
+            'id' => (int) $_REQUEST['id']
+        ];
+        $result = $this->select($sql, $search);
+        
+        $columns = [];
+        foreach ($data['fields'] as $key => $field) {    
+            $columns[$field['name']] = $field['caption'];    
+        }
+       
+        $vars = [
+            'fields'  => $data['fields'],
+            'store'   => $this,     
+            'result'  => $result,
+            'columns' => $columns
+        ];
+        
+        $display = new Display($this->_config['table_path']);
+        
+        echo $display->fetch('table-edit-popup.phtml', $vars);
+        
+        exit;
+    }
+    
+    public function fetchParser($nameParser = 'input', $vars = [])
+    {
+        $display = new Display(__DIR__.'/parsers/views/');
+        
+        return $display->fetch($nameParser.'.phtml', $vars);
         
     }
 }

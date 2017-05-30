@@ -4,19 +4,23 @@
     "fields": [
         {
             "name": "id",
-            "caption": "ID"
+            "caption": "ID",
+            "type": "input"
         },
         {
             "name": "name",
-            "caption": "Name"
+            "caption": "Name",
+            "type": "input"
         },
         {
             "name": "email",
-            "caption": "E-mail"
+            "caption": "E-mail",
+            "type": "input"
         },
         {
             "name": "role",
-            "caption": "Role"
+            "caption": "Role",
+            "type": "input"
         }
     ]
 }

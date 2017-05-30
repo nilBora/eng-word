@@ -6,8 +6,10 @@ var Store = {
     onEditRow: function() {
         jQuery('.js-edit-row').on('click', function(e) {
             e.preventDefault();
-            jQuery.post('/admin/users/', {}, function(data) {
-                 
+            var id = jQuery(this).data('id');
+            jQuery.post(window.location.pathname, {'id': id, 'ajax': true, 'edit': true}, function(data) {
+                 jQuery('body').append(data);
+                 jQuery('.js-table-edit').modal();
             });
         })
     }

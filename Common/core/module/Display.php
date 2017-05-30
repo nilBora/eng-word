@@ -48,8 +48,10 @@ class Display extends AbstractModule implements IModule
         
         if (file_exists($moduleTemplateDir . $template)) {
             $templatePath = $moduleTemplateDir . $template;
-        } else {
+        } else if (file_exists(THEME_DIR.$template)){
             $templatePath = THEME_DIR . $template;
+        } else {
+            $templatePath = $this->_path . $template;
         }
        
         ob_start();
