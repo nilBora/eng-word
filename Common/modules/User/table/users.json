@@ -5,22 +5,22 @@
         {
             "name": "id",
             "caption": "ID",
-            "type": "input"
+            "type": "text"
         },
         {
             "name": "name",
             "caption": "Name",
-            "type": "input"
+            "type": "text"
         },
         {
             "name": "email",
             "caption": "E-mail",
-            "type": "input"
+            "type": "text"
         },
         {
             "name": "role",
             "caption": "Role",
-            "type": "input"
+            "type": "text"
         }
     ]
 }

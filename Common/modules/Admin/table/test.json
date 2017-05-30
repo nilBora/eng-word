@@ -5,27 +5,27 @@
         {
             "name": "id",
             "caption": "ID",
-            "type": "input"
+            "type": "text"
         },
         {
             "name": "cdate",
             "caption": "Date",
-            "type": "input"
+            "type": "text"
         },
         {
             "name": "word",
             "caption": "Word",
-            "type": "input"
+            "type": "text"
         },
         {
             "name": "translate",
             "caption": "Traslate",
-            "type": "input"
+            "type": "text"
         },
         {
             "name": "frequency",
             "caption": "Frequency",
-            "type": "input"
+            "type": "text"
         }
     ]
 }

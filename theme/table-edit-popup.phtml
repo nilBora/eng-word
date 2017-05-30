@@ -8,17 +8,9 @@
       <div class="modal-body">
           <form>
               <?php foreach ($fields as $field) {
-                        $vars = $field;
-                        $vars['value'] = $result[$field['name']];
-                        
-                        echo $store->fetchParser($field['type'], $vars);
+                        echo $store->fetchParser($field['type'], $field);
                     }
               ?>
-              <?php 
-                
-                    
-                ?>
-                
           </form>
       </div>
       <div class="modal-footer">

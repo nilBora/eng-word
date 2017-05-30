@@ -92,16 +92,15 @@ class Store extends Object {
         ];
         $result = $this->select($sql, $search);
         
-        $columns = [];
-        foreach ($data['fields'] as $key => $field) {    
-            $columns[$field['name']] = $field['caption'];    
+        $fields = $data['fields'];
+        
+        foreach ($fields as $key => $field) {
+            $fields[$key]['value'] = $result[$field['name']];
         }
-       
+        
         $vars = [
-            'fields'  => $data['fields'],
-            'store'   => $this,     
-            'result'  => $result,
-            'columns' => $columns
+            'fields'  => $fields,
+            'store'   => $this,
         ];
         
         $display = new Display($this->_config['table_path']);
@@ -111,11 +110,11 @@ class Store extends Object {
         exit;
     }
     
-    public function fetchParser($nameParser = 'input', $vars = [])
+    public function fetchParser($nameParser = 'text', $field = [])
     {
         $display = new Display(__DIR__.'/parsers/views/');
         
-        return $display->fetch($nameParser.'.phtml', $vars);
+        return $display->fetch($nameParser.'.phtml', $field);
         
     }
 }
