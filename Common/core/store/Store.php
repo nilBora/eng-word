@@ -49,7 +49,9 @@ class Store extends Object {
         if (array_key_exists('ajax', $_REQUEST) && array_key_exists('edit', $_REQUEST)) {
             $this->_doShowEditForm($data);
         }
-        
+        if (array_key_exists('action', $_REQUEST) && $_REQUEST['action'] == 'save') {
+            $this->_doSaveForm($data);
+        }
         
         $select = '';
         $columns = [];
@@ -99,6 +101,7 @@ class Store extends Object {
         }
         
         $vars = [
+            'id'      => $result['id'],
             'fields'  => $fields,
             'store'   => $this,
         ];
@@ -114,9 +117,26 @@ class Store extends Object {
     {
         $display = new Display(__DIR__.'/parsers/views/');
         
-        return $display->fetch($nameParser.'.phtml', $field);
-        
+        return $display->fetch($nameParser.'.phtml', $field);    
     }
+    
+    private function _doSaveForm($data)
+    {
+        $request = $_REQUEST;
+        
+        foreach ($data['fields'] as $field) {
+            if (array_key_exists($field['name'], $request)) {
+                $values[$field['name']] = $request[$field['name']];
+            }
+        }
+        unset($values['id']);
+        
+        $search = array(
+            'id' => $request['id']
+        );
+        return $this->update($data['table'], $search, $values);
+    }
+    
 }
 
 class StoreException extends \Exception
