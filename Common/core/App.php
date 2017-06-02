@@ -21,7 +21,7 @@ class App extends Dispatcher
 		}
         $this->_setConfig();
         $this->_initSession();
-        $this->includeModules();
+        $this->_includeModules();
 
         $this->_route = new Route();
 	}
@@ -344,19 +344,19 @@ class App extends Dispatcher
         return $this->_properties;
     }
 
-    public function includeModules()
+    private function _includeModules()
     {
         $configModules = [];
-        $modules = array(
-            'Admin',
-            'EngWord',
-            'Main',
-            'Queue',
-            'RESTfulApi',
-            'User'
-        );
+        
+        //$this->_getIncludingModules();
+        
+        include CONFIG_DIR.'modules.php';
 
-        foreach ($modules as $module) {
+        foreach ($modules as $module => $config) {
+                
+            if ($config['status'] != 'active') {
+                continue;
+            }
             $fileDir = MODULES_DIR.$module.'/'.$module.'.php';
             if (file_exists($fileDir)) {
                 require_once $fileDir;

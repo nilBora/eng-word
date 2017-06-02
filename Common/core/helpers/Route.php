@@ -86,7 +86,7 @@ class Route
     private function _getRoutesByConfig()
     {
         $configs = App::getInstance()->getConfig('modules');
-
+    
         $routes = [];
        
         if (!$configs) {
