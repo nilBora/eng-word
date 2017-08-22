@@ -25,5 +25,6 @@ require_once CORE_DIR . 'libs/SystemLog.php';
 require_once CORE_DIR . 'libs/System.php';
 
 require_once CORE_DIR.'store/Store.php';
+require_once CORE_DIR.'store/adapters/AbstractStore.php';
 
 require_once HELPERS_DIR.'Profiler.php';

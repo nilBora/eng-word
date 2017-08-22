@@ -388,6 +388,7 @@ class App extends Dispatcher
     public function createStoreInstance($table)
     {
         $whoInvoke = debug_backtrace();
+
         $path = dirname($whoInvoke[0]['file']).'/table/';
         
         $options = [
