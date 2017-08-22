@@ -26,7 +26,7 @@ class App extends Dispatcher
         $this->_route = new Route();
 	}
 
-	public static function getInstance()
+	public static function &getInstance()
 	{
 		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
