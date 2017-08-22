@@ -9,7 +9,7 @@ define('MODULES_DIR', COMMON_DIR.'modules/');
 define('TEMPLATE_DIR', ROOT_DIR.'templates/');
 define('THEME_DIR', ROOT_DIR.'theme/');
 define('HELPERS_DIR', CORE_DIR.'helpers/');
-
+define('CONFIG_DIR', COMMON_DIR.'config/');
 
 //Перенести в вайл Autoload.php c core dir
 require_once "config.php";
