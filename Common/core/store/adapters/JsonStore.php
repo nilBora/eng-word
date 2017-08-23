@@ -33,12 +33,4 @@ class JsonStore extends AbstractStore
         
     }
 
-    //TODO: In parent
-    public function fetchParser($nameParser = 'text', $field = [])
-    {
-        $display = new Display(STORE_DIR.'parsers/views/');
-        
-        return $display->fetch($nameParser.'.phtml', $field);    
-    }
-
 }

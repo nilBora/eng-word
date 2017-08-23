@@ -7,7 +7,7 @@ class Admin extends Display
 {
     public function defaultIndex(Response &$response)
     {
-        $crud = $this->app->createStoreInstance('test');
+        $crud = $this->app->createStoreInstance('words');
 
         $data = $crud->render($response);
         

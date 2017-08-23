@@ -10,6 +10,7 @@ abstract class AbstractStore extends Store
     public function __construct($table, $config)
     {
         $this->config = $config;
+        $this->config['tableName'] = $table;
         $this->tableFile = $config['table_path'].$table;
     }
     
@@ -101,6 +102,13 @@ abstract class AbstractStore extends Store
             'id' => $request['id']
         );
         return $this->update($data['table'], $search, $values);
+    }
+    
+    public function fetchParser($nameParser = 'text', $field = [])
+    {
+        $display = new Display(STORE_DIR.'parsers/views/');
+        
+        return $display->fetch($nameParser.'.phtml', $field);    
     }
 
 }

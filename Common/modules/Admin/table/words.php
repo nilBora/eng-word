@@ -1,6 +1,6 @@
 <?php
 
-$words = [
+$table = [
     "table" => "words",
     "fields" => [
         [

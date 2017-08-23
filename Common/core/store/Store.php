@@ -24,11 +24,13 @@ class Store extends Object {
         }
         
         
+/*
         $fileName = $config['table_path'].$table.'.json';
 
         if (!file_exists($fileName)) {
             throw new Exception('Not found file:'.$fileName);
         }
+*/
         $this->_config = $config;
         $this->_tableFile = $config['table_path'].$table.'.json'; 
     }
