@@ -392,9 +392,10 @@ class App extends Dispatcher
         $path = dirname($whoInvoke[0]['file']).'/table/';
         
         $options = [
+            'table_name' => $table,
             'table_path' => $path
         ];
-        $crud = new Store($table, $options);
+        $crud = new Store($options);
         
         return $crud;
     }

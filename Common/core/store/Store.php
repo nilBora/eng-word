@@ -9,18 +9,21 @@ class Store extends Object {
     private $_config;
     private $_adapter;
     
-    public function __construct($table, $config)
+    public function __construct($config)
     {
-        $fileName = $config['table_path'].$table;
+        if (empty($config['table_name'])) {
+            throw new Exception('Not found table');
+        }
+        $fileName = $config['table_path'].$config['table_name'];
 
         if (file_exists($fileName.'.json')) {
             require_once __DIR__.'/adapters/JsonStore.php';
-            $this->_adapter = new JsonStore($table, $config);
+            $this->_adapter = new JsonStore($config);
         }
 
         if (file_exists($fileName.'.php')) {
             require_once __DIR__.'/adapters/ArrayStore.php';
-            $this->_adapter = new ArrayStore($table, $config);
+            $this->_adapter = new ArrayStore($config);
         }
         
         
@@ -32,7 +35,7 @@ class Store extends Object {
         }
 */
         $this->_config = $config;
-        $this->_tableFile = $config['table_path'].$table.'.json'; 
+        $this->_tableFile = $config['table_path'].$config['table_name'].'.json'; 
     }
         
     public function render(Response &$response)

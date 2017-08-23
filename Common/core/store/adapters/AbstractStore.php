@@ -7,11 +7,10 @@ abstract class AbstractStore extends Store
     protected $tableFile;
     protected $config;
     
-    public function __construct($table, $config)
+    public function __construct($config)
     {
         $this->config = $config;
-        $this->config['tableName'] = $table;
-        $this->tableFile = $config['table_path'].$table;
+        $this->tableFile = $config['table_path'].$config['table_name'];
     }
     
     public function renderTable(Response &$response, $data)
