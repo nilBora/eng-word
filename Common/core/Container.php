@@ -30,7 +30,7 @@ class Container
                 $resposeData[] = &$response;
                 $params = array_merge($resposeData, $params);
             }
-            print_r($params);
+            
             call_user_func_array(
                 [$controller, $method],
                 $params
@@ -41,19 +41,7 @@ class Container
     
     private static function _getSettings()
     {
-        $settings = [
-            'MAIN' => [
-                'Main'    => [
-                    'method' => 'onDisaplyTest',
-                    'params' => array('test')
-                ],
-                'EngWord' => [
-                    'method' => 'test',
-                    'response' => true,
-                    'params' => ['222']
-                ]
-            ]
-        ];
+        include CONFIG_DIR.'container.php';
         
         return $settings;
     }
