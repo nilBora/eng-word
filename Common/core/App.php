@@ -385,7 +385,7 @@ class App extends Dispatcher
         $this->_config = array_merge($configModules, $this->_config);
     }
 
-    public function createStoreInstance($table)
+    public function createStoreInstance($table, $settings = array())
     {
         $whoInvoke = debug_backtrace();
 
@@ -395,8 +395,9 @@ class App extends Dispatcher
             'table_name' => $table,
             'table_path' => $path
         ];
-        $crud = new Store($options);
+        $options = array_merge($options, $settings);
+        $store = new Store($options);
         
-        return $crud;
+        return $store;
     }
 }
