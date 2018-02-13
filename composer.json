@@ -1,5 +1,7 @@
 {
+    "name": "nil.borodulia/eng-word",
+    "description": "eng-word",
     "require": {
-        "vendor/package": "1.3.2"
+        "php": "^5.3.3 || ^7.0",
     }
 }
